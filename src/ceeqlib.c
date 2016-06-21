@@ -66,6 +66,6 @@ void help() {
 	printf("Usage: ceeqlib [command] [file1] [file2]\n\n");
 	printf("    fastq2fasta [fastq file]                print the fastq file in fasta format\n");
 	printf("    fastq2fasta_sorted [fastq file]         print the fastq file with the sequence ids sorted\n");
-	printf("    fastq_pair [left reads] [right reads]   pair the left and right reads, creating left_paired, right_paired, left_single, and right_single files");
+	printf("    fastq_pair [left reads] [right reads]   pair the left and right reads, creating left_paired, right_paired, left_single, and right_single files\n");
 	exit(0);
 }
