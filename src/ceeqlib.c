@@ -10,8 +10,10 @@
  */
 
 #include "ceeqlib.h"
+#include "hash.h"
 #include "fastq_read.h"
 #include "fastq_hash.h"
+#include "fastq_pair_stream.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -44,6 +46,14 @@ int main(int argc, char *argv[]) {
 					printf(">%s\n%s\n", ids[i], ptr->seq);
 		}
 	}
+	if (strcmp(argv[1], "fastq_pair") == 0) {
+		if (argc != 4) {
+			fprintf(stderr, "%s fastq_pair [left reads] [right reads]\n", argv[0]);
+			exit(1);
+		}
+		fastq_pair_stream(argv[2], argv[3]);
+	}
+		
 	else {
 		help();
 	}
@@ -54,7 +64,8 @@ int main(int argc, char *argv[]) {
 void help() {
 	printf("ceeqlib.c\nVersion %f\nCopyright Rob Edwards\rReleased under the MIT license\n\n", VERSION);
 	printf("Usage: ceeqlib [command] [file1] [file2]\n\n");
-	printf("    fastq2fasta [fastq file]           print the fastq file in fasta format\n");
-	printf("    fastq2fasta_sorted [fastq file]    print the fastq file with the sequence ids sorted\n");
+	printf("    fastq2fasta [fastq file]                print the fastq file in fasta format\n");
+	printf("    fastq2fasta_sorted [fastq file]         print the fastq file with the sequence ids sorted\n");
+	printf("    fastq_pair [left reads] [right reads]   pair the left and right reads, creating left_paired, right_paired, left_single, and right_single files");
 	exit(0);
 }

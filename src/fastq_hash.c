@@ -7,24 +7,12 @@
 
 #include "ceeqlib.h"
 #include "fastq_hash.h"
+#include "hash.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
 
-
-
-/* calculate the hash for a fastq sequence */
-/* we use an unsigned here so that the answer is > 0 */
-unsigned hash (char *s) {
-	unsigned hashval;
-
-	for (hashval=0; *s != '\0'; s++)
-		hashval = *s + 31 * hashval;
-	return hashval % HASHSIZE;
-
-
-}
 
 
 /* look up an entry based on its hash function.

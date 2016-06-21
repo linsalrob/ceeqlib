@@ -1,15 +1,14 @@
 /*
  * ceeqlib.h
  *
- *  Created on: Jun 20, 2016
- *      Author: redwards
+ *  
+ * Author: Rob Edwards
  */
 
 #ifndef CEEQLIB_H_
 #define CEEQLIB_H_
 
 #define VERSION 0.1
-#define HASHSIZE 10000
 #define VERBOSE 0
 
 /* our fastq data structure.

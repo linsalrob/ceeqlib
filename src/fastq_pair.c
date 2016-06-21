@@ -9,6 +9,7 @@
 #include "fastq_read.h"
 #include "fastq_hash.h"
 #include "fastq_pair.h"
+#include "hash.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>

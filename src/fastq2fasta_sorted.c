@@ -4,6 +4,7 @@
  * Author: redwards
  */
 #include "ceeqlib.h"
+#include "hash.h"
 #include "fastq_hash.h"
 #include "fastq_read.h"
 #include <stdio.h>

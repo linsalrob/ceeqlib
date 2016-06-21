@@ -5,6 +5,7 @@
  */
 
 #include "ceeqlib.h"
+#include "hash.h"
 #include <stdio.h>
 
 /* print our fastq structure in fasta format */
