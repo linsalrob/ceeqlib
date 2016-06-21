@@ -16,12 +16,13 @@ FQPAIR = fastq_pair
 
 SOURCEDIR = src
 EXCDIR = bin
+
 # define the C source files
 
-SRCS = $(filter-out $(SOURCEDIR)/fastq2fasta_sorted.c $(SOURCEDIR)/fastq2fasta.c $(SOURCEDIR)/fastq_pair.c, $(wildcard $(SOURCEDIR)/*.c))
-FQFASSRC = $(SOURCEDIR)/$(FQFAS).c $(SOURCEDIR)/fastq_read.c $(SOURCEDIR)/fastq_hash.c $(SOURCEDIR)/ids.c
+SRCS = $(filter-out $(addprefix $(SOURCEDIR)/, fastq2fasta_sorted.c fastq2fasta.c fastq_pair.c), $(wildcard $(SOURCEDIR)/*.c))
+FQFASSRC = $(addprefix $(SOURCEDIR)/, $(FQFAS).c fastq_read.c fastq_hash.c ids.c)
 FQFASRC = $(SOURCEDIR)/$(FQFA).c
-FQPAIRSRC = $(SOURCEDIR)/$(FQPAIR).c $(SOURCEDIR)/fastq_read.c $(SOURCEDIR)/fastq_hash.c 
+FQPAIRSRC = $(addprefix $(SOURCEDIR)/, $(FQPAIR).c fastq_read.c fastq_hash.c) 
 
 list:
 	@echo Sources: $(SRCS)
@@ -37,12 +38,12 @@ CFLAGS = -Wall -g
 
 # define any directories containing header files other than /usr/include
 #
-INCLUDES = -I/home/redwards/include  -I../include
+INCLUDES = -I$(HOME)/include  -I../include
 
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
 #   their path using -Lpath, something like:
-LFLAGS = -L/home/redwards/lib  -L../lib
+LFLAGS = -L$(HOME)/lib  -L../lib
 
 # define any libraries to link into executable:
 #   if I want to link in libraries (libx.so or libx.a) I use the -llibname 
@@ -70,24 +71,28 @@ FQPAIROBJ = $(FQPAIRSRC:.c=.o)
 
 all: $(MAIN) $(FQFA) $(FQFAS) $(FQPAIR)
 
-$(MAIN): $(OBJS) 
+$(MAIN): $(OBJS) | $(EXCDIR)
 	@echo Making $(MAIN)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(EXCDIR)/$(MAIN) $(OBJS) $(LFLAGS) $(LIBS)
 
-debug: $(OBJS)
+debug: $(OBJS)| $(EXCDIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -g -o $(EXCDIR)/$(MAIN) $(OBJS) $(LFLAGS) $(LIBS)
 
-$(FQFAS): $(FQFASORTOBJS)
+$(FQFAS): $(FQFASORTOBJS)| $(EXCDIR)
 	@echo Making ceeq_$(FQFAS)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(EXCDIR)/ceeq_$(FQFAS) $(FQFASORTOBJS) $(LFLAGS) $(LIBS)
 
-$(FQFA): $(FQFAOBJ)
+$(FQFA): $(FQFAOBJ)| $(EXCDIR)
 	@echo Making ceeq_$(FQFA)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(EXCDIR)/ceeq_$(FQFA) $(FQFAOBJ) $(LFLAGS) $(LIBS)
 
-$(FQPAIR): $(FQPAIROBJ)
+$(FQPAIR): $(FQPAIROBJ)| $(EXCDIR)
 	@echo Making ceeq_$(FQPAIR)  
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(EXCDIR)/ceeq_$(FQPAIR) $(FQPAIROBJ) $(LFLAGS) $(LIBS)
+
+$(EXCDIR):
+	mkdir -p $(EXCDIR)
+
 
 # this is a suffix replacement rule for building .o's from .c's
 # it uses automatic variables $<: the name of the prerequisite of
