@@ -209,11 +209,11 @@ int fastq_pair_stream(char *left_fn, char *right_fn) {
 			if (strcmp(ptr->seqid, seqid) == 0) {
 				ptr->seen = 1;
 				found = 1;
-				fprintf(left_paired, "%s\n%s\n+\n%s\n", ptr->name, ptr->seq, ptr->qual);
-				fprintf(right_paired, "%s\n%s\n+\n%s\n", name, seq, qual);
+				fprintf(left_paired, "%s%s+\n%s", ptr->name, ptr->seq, ptr->qual);
+				fprintf(right_paired, "%s%s+\n%s", name, seq, qual);
 			}
 		if (!found)
-			fprintf(right_single, "%s\n%s\n+\n%s\n", name, seq, qual);
+			fprintf(right_single, "%s%s+\n%s", name, seq, qual);
 	}
 	/* now we just need to iterate through all the sequences and print the ones we haven't seen */
 
@@ -222,7 +222,7 @@ int fastq_pair_stream(char *left_fn, char *right_fn) {
 	for (int i=0; i<HASHSIZE; i++) 
 		for (ptr = seqs[i]; ptr != NULL; ptr = ptr->next)
 			if (!ptr->seen)
-				fprintf(left_single, "%s\n%s\n+\n%s\n", ptr->name, ptr->seq, ptr->qual);
+				fprintf(left_single, "%s%s+\n%s", ptr->name, ptr->seq, ptr->qual);
 
 
 
