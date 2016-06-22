@@ -19,10 +19,10 @@ EXCDIR = bin
 
 # define the C source files
 
-SRCS = $(filter-out $(addprefix $(SOURCEDIR)/, fastq2fasta_sorted.c fastq2fasta.c fastq_pair.c), $(wildcard $(SOURCEDIR)/*.c))
+SRCS = $(filter-out $(addprefix $(SOURCEDIR)/, fastq_pair_fast.c fastq2fasta_sorted.c fastq2fasta.c fastq_pair.c), $(wildcard $(SOURCEDIR)/*.c))
 FQFASSRC = $(addprefix $(SOURCEDIR)/, $(FQFAS).c fastq_read.c fastq_hash.c ids.c hash.c)
 FQFASRC = $(SOURCEDIR)/$(FQFA).c
-FQPAIRSRC = $(addprefix $(SOURCEDIR)/, $(FQPAIR).c fastq_read.c fastq_hash.c hash.c) 
+FQPAIRSRC = $(addprefix $(SOURCEDIR)/, fastq_pair_fast.c fastq_pair_stream.c hash.c)
 
 list:
 	@echo Sources: $(SRCS)
@@ -34,7 +34,7 @@ listfqfasort:
 CC = gcc
 
 # define any compile-time flags
-CFLAGS = -Wall -g
+CFLAGS = -Wall
 
 # define any directories containing header files other than /usr/include
 #
