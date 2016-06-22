@@ -34,7 +34,7 @@ listfqfasort:
 CC = gcc
 
 # define any compile-time flags
-CFLAGS = -Wall
+CFLAGS = -Wall -std=gnu99 -g
 
 # define any directories containing header files other than /usr/include
 #
@@ -71,7 +71,7 @@ FQPAIROBJ = $(FQPAIRSRC:.c=.o)
 
 all: $(MAIN) $(FQFA) $(FQFAS) $(FQPAIR)
 
-$(MAIN): $(OBJS) | $(EXCDIR)
+$(MAIN): | $(EXCDIR) $(OBJS)
 	@echo Making $(MAIN)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(EXCDIR)/$(MAIN) $(OBJS) $(LFLAGS) $(LIBS)
 
