@@ -31,5 +31,6 @@ char *catstr(const char *s, const char *t) {
 		result[i] = s[i];
 	for (int j=0; j<strlen(t); j++)
 		result[i++] = t[j];
+	result[i]='\0';
 	return result;
 }
