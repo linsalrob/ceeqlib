@@ -13,6 +13,7 @@ MAIN = ceeqlib
 FQFAS = fastq2fasta_sorted
 FQFA = fastq2fasta
 FQPAIR = fastq_pair
+FQPAIRGZ = fastq_pair_gz
 TESTDS = testds
 
 SOURCEDIR = src
@@ -21,10 +22,11 @@ TESTDIR = tests
 
 # define the C source files
 
-SRCS = $(filter-out $(addprefix $(SOURCEDIR)/, fastq_pair_fast.c fastq2fasta_sorted.c fastq2fasta.c fastq_pair.c), $(wildcard $(SOURCEDIR)/*.c))
+SRCS = $(filter-out $(addprefix $(SOURCEDIR)/, fastq_pair_fast.c fastq2fasta_sorted.c fastq2fasta.c fastq_pair.c fastq_pair_gzip.c), $(wildcard $(SOURCEDIR)/*.c))
 FQFASSRC = $(addprefix $(SOURCEDIR)/, $(FQFAS).c fastq_read.c fastq_hash.c ids.c hash.c dupstr.c)
 FQFASRC = $(SOURCEDIR)/$(FQFA).c
 FQPAIRSRC = $(addprefix $(SOURCEDIR)/, fastq_pair_fast.c fastq_pair_stream.c hash.c dupstr.c)
+FQPAIRGZSRC = $(addprefix $(SOURCEDIR)/, fastq_pair_gzip.c hash.c dupstr.c)
 
 # define some tests
 TESTDSSRC = $(TESTDIR)/test_dupstr.c $(SOURCEDIR)/dupstr.c
@@ -52,7 +54,7 @@ INCLUDES = -I$(HOME)/include  -I../include -Isrc
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
 #   their path using -Lpath, something like:
-LFLAGS = -L$(HOME)/lib  -L../lib
+LFLAGS = -L$(HOME)/lib  -L../lib -lz
 
 # define any libraries to link into executable:
 #   if I want to link in libraries (libx.so or libx.a) I use the -llibname 
@@ -69,6 +71,7 @@ OBJS = $(SRCS:.c=.o)
 FQFASORTOBJS = $(FQFASSRC:.c=.o)
 FQFAOBJ = $(FQFASRC:.c=.o)
 FQPAIROBJ = $(FQPAIRSRC:.c=.o)
+FQPAIRGZOBJ = $(FQPAIRGZSRC:.c=.o)
 
 TESTDSOBJ = $(TESTDSSRC:.c=.o)
 
@@ -80,26 +83,30 @@ TESTDSOBJ = $(TESTDSSRC:.c=.o)
 
 .PHONY: depend clean
 
-all: $(MAIN) $(FQFA) $(FQFAS) $(FQPAIR)
+all: $(MAIN) $(FQFA) $(FQFAS) $(FQPAIR) $(FQPAIRGZ)
 
 $(MAIN): | $(EXCDIR) $(OBJS)
 	@echo Making $(MAIN)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(EXCDIR)/$(MAIN) $(OBJS) $(LFLAGS) $(LIBS)
 
-debug: $(OBJS)| $(EXCDIR)
+debug: |$(EXCDIR) $(OBJS) 
 	$(CC) $(CFLAGS) $(INCLUDES) -g -o $(EXCDIR)/$(MAIN) $(OBJS) $(LFLAGS) $(LIBS)
 
-$(FQFAS): $(FQFASORTOBJS)| $(EXCDIR)
+$(FQFAS): |$(EXCDIR) $(FQFASORTOBJS) 
 	@echo Making ceeq_$(FQFAS)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(EXCDIR)/ceeq_$(FQFAS) $(FQFASORTOBJS) $(LFLAGS) $(LIBS)
 
-$(FQFA): $(FQFAOBJ)| $(EXCDIR)
+$(FQFA): |$(EXCDIR) $(FQFAOBJ) 
 	@echo Making ceeq_$(FQFA)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(EXCDIR)/ceeq_$(FQFA) $(FQFAOBJ) $(LFLAGS) $(LIBS)
 
-$(FQPAIR): $(FQPAIROBJ)| $(EXCDIR)
+$(FQPAIR): |$(EXCDIR) $(FQPAIROBJ) 
 	@echo Making ceeq_$(FQPAIR)  
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(EXCDIR)/ceeq_$(FQPAIR) $(FQPAIROBJ) $(LFLAGS) $(LIBS)
+
+$(FQPAIRGZ): |$(EXCDIR) $(FQPAIRGZOBJ) 
+	@echo Making ceeq_$(FQPAIRGZ)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(EXCDIR)/ceeq_$(FQPAIRGZ) $(FQPAIRGZOBJ) $(LFLAGS) $(LIBS)
 
 $(EXCDIR):
 	mkdir -p $(EXCDIR)
