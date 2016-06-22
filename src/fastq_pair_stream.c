@@ -19,6 +19,7 @@
 /* our hash of sequences from the left file */
 struct fastq_pair_stream *seqs[HASHSIZE] = {NULL};
 
+char *ignored; /* this variable is not used, it suppresses a compiler warning */
 /* stream the fastq files.
  * left_fn: the file name for the file with the left reads (/1)
  * right_fn: the file name for the file with the right reads (/2)
@@ -43,7 +44,7 @@ int fastq_pair_stream(char *left_fn, char *right_fn) {
 		exit(1);
 	}
 
-	while ((fgets(line, MAXLINELEN, fp)) != NULL) {
+	while ((ignored = fgets(line, MAXLINELEN, fp)) != NULL) {
 
 		/* define our fastq data element */
 		struct fastq_pair_stream *nfq;
@@ -62,7 +63,7 @@ int fastq_pair_stream(char *left_fn, char *right_fn) {
 		nfq->seqid = dupstr(line);
 
 		/* read the sequence and save it */
-		fgets(line, MAXLINELEN, fp);
+		ignored = fgets(line, MAXLINELEN, fp);
 		if (line == NULL) {
 			fprintf(stderr, "There was no sequence for %s", nfq->name);
 			exit(1);
@@ -70,10 +71,10 @@ int fastq_pair_stream(char *left_fn, char *right_fn) {
 		nfq->seq = dupstr(line);
 
 		/* read the next line  and ignore it */
-		fgets(line, MAXLINELEN, fp);
+		ignored = fgets(line, MAXLINELEN, fp);
 
 		/* read the quality scores and save them */
-		fgets(line, MAXLINELEN, fp);
+		ignored = fgets(line, MAXLINELEN, fp);
 		if (line == NULL) {
 			fprintf(stderr, "There were no quality scores for %s", nfq->name);
 			exit(1);
@@ -84,7 +85,6 @@ int fastq_pair_stream(char *left_fn, char *right_fn) {
 			seqcounter++;
 
 		free(nfq);
-		free(line);
 
 	}
 
@@ -105,10 +105,10 @@ int fastq_pair_stream(char *left_fn, char *right_fn) {
 	FILE * right_single;
 	
 	char *lpfn = strcat(dupstr(left_fn), ".paired.fq");
-	char *rpfn = strcat(dupstr(right_fn), ".single.fq");
-	char *lsfn = strcat(dupstr(left_fn), ".paired.fq");
+	char *rpfn = strcat(dupstr(right_fn), ".paired.fq");
+	char *lsfn = strcat(dupstr(left_fn), ".single.fq");
 	char *rsfn = strcat(dupstr(right_fn), ".single.fq");
-	printf("Writing the paired reads to %s and %s.\nWriting the single reads to %sand%s\n", lpfn, rpfn, lsfn, rsfn);
+	printf("Writing the paired reads to %s and %s.\nWriting the single reads to %s and %s\n", lpfn, rpfn, lsfn, rsfn);
 
 	if ((left_paired = fopen(lpfn, "w")) == NULL ) {
 		fprintf(stderr, "Can't open file %s\n", lpfn);
@@ -138,7 +138,7 @@ int fastq_pair_stream(char *left_fn, char *right_fn) {
 		exit(1);
 	}
 
-	while ((fgets(line, MAXLINELEN, fp)) != NULL) {
+	while ((ignored = fgets(line, MAXLINELEN, fp)) != NULL) {
 		
 		/* store the whole line */
 		char *name = dupstr(line);
@@ -148,7 +148,7 @@ int fastq_pair_stream(char *left_fn, char *right_fn) {
 		char *seqid = dupstr(line);
 
 		/* read the sequence and save it */
-		fgets(line, MAXLINELEN, fp);
+		ignored = fgets(line, MAXLINELEN, fp);
 		if (line == NULL) {
 			fprintf(stderr, "There was no sequence for %s", name);
 			exit(1);
@@ -156,10 +156,10 @@ int fastq_pair_stream(char *left_fn, char *right_fn) {
 		char *seq = dupstr(line);
 
 		/* read the next line  and ignore it */
-		fgets(line, MAXLINELEN, fp);
+		ignored = fgets(line, MAXLINELEN, fp);
 
 		/* read the quality scores and save them */
-		fgets(line, MAXLINELEN, fp);
+		ignored = fgets(line, MAXLINELEN, fp);
 		if (line == NULL) {
 			fprintf(stderr, "There were no quality scores for %s", name);
 			exit(1);
