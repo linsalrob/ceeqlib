@@ -59,10 +59,10 @@ struct fastq *add(struct fastq *s, char hashby[], struct fastq *seqs[]) {
 			return NULL;
 		}
 
-		if (((ptr->seqid = strdup(s->seqid)) == NULL) ||
-				((ptr->seq = strdup(s->seq)) == NULL) ||
-				((ptr->name = strdup(s->name)) == NULL) ||
-				((ptr->qual = strdup(s->qual)) == NULL)) {
+		if (((ptr->seqid = dupstr(s->seqid)) == NULL) ||
+				((ptr->seq = dupstr(s->seq)) == NULL) ||
+				((ptr->name = dupstr(s->name)) == NULL) ||
+				((ptr->qual = dupstr(s->qual)) == NULL)) {
 			fprintf(stderr, "Can't duplicate struct\n");
 			return NULL;
 		}

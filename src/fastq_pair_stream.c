@@ -54,11 +54,11 @@ int fastq_pair_stream(char *left_fn, char *right_fn) {
 		nfq->seen = 0;
 
 		/* store the whole line */
-		nfq->name = strdup(line);
+		nfq->name = dupstr(line);
 
 		/* store the sequence ID */
 		line[strcspn(line, " ")] = '\0';
-		nfq->seqid = strdup(line);
+		nfq->seqid = dupstr(line);
 
 		/* read the sequence and save it */
 		fgets(line, MAXLINELEN, fp);
@@ -66,7 +66,7 @@ int fastq_pair_stream(char *left_fn, char *right_fn) {
 			fprintf(stderr, "There was no sequence for %s", nfq->name);
 			exit(1);
 		}
-		nfq->seq = strdup(line);
+		nfq->seq = dupstr(line);
 
 		/* read the next line  and ignore it */
 		fgets(line, MAXLINELEN, fp);
@@ -77,7 +77,7 @@ int fastq_pair_stream(char *left_fn, char *right_fn) {
 			fprintf(stderr, "There were no quality scores for %s", nfq->name);
 			exit(1);
 		}
-		nfq->qual = strdup(line);
+		nfq->qual = dupstr(line);
 
 		if (addfqs(nfq) != NULL)
 			seqcounter++;
@@ -102,10 +102,10 @@ int fastq_pair_stream(char *left_fn, char *right_fn) {
 	FILE * right_paired;
 	FILE * right_single;
 	
-	char *lpfn = strcat(strdup(left_fn), ".paired.fq");
-	char *rpfn = strcat(strdup(right_fn), ".single.fq");
-	char *lsfn = strcat(strdup(left_fn), ".paired.fq");
-	char *rsfn = strcat(strdup(right_fn), ".single.fq");
+	char *lpfn = strcat(dupstr(left_fn), ".paired.fq");
+	char *rpfn = strcat(dupstr(right_fn), ".single.fq");
+	char *lsfn = strcat(dupstr(left_fn), ".paired.fq");
+	char *rsfn = strcat(dupstr(right_fn), ".single.fq");
 	printf("Writing the paired reads to %s and %s.\nWriting the single reads to %sand%s\n", lpfn, rpfn, lsfn, rsfn);
 
 	if ((left_paired = fopen(lpfn, "w")) == NULL ) {
@@ -139,11 +139,11 @@ int fastq_pair_stream(char *left_fn, char *right_fn) {
 	while ((fgets(line, MAXLINELEN, fp)) != NULL) {
 		
 		/* store the whole line */
-		char *name = strdup(line);
+		char *name = dupstr(line);
 
 		/* store the sequence ID */
 		line[strcspn(line, " ")] = '\0';
-		char *seqid = strdup(line);
+		char *seqid = dupstr(line);
 
 		/* read the sequence and save it */
 		fgets(line, MAXLINELEN, fp);
@@ -151,7 +151,7 @@ int fastq_pair_stream(char *left_fn, char *right_fn) {
 			fprintf(stderr, "There was no sequence for %s", name);
 			exit(1);
 		}
-		char *seq = strdup(line);
+		char *seq = dupstr(line);
 
 		/* read the next line  and ignore it */
 		fgets(line, MAXLINELEN, fp);
@@ -162,7 +162,7 @@ int fastq_pair_stream(char *left_fn, char *right_fn) {
 			fprintf(stderr, "There were no quality scores for %s", name);
 			exit(1);
 		}
-		char *qual = strdup(line);
+		char *qual = dupstr(line);
 
 		/* figure out if the read has been seen before */
 
@@ -252,10 +252,10 @@ struct fastq_pair_stream *addfqs(struct fastq_pair_stream *s) {
 		return NULL;
 	}
 
-	if (((ptr->seqid = strdup(s->seqid)) == NULL) ||
-			((ptr->seq = strdup(s->seq)) == NULL) ||
-			((ptr->name = strdup(s->name)) == NULL) ||
-			((ptr->qual = strdup(s->qual)) == NULL)) {
+	if (((ptr->seqid = dupstr(s->seqid)) == NULL) ||
+			((ptr->seq = dupstr(s->seq)) == NULL) ||
+			((ptr->name = dupstr(s->name)) == NULL) ||
+			((ptr->qual = dupstr(s->qual)) == NULL)) {
 		fprintf(stderr, "Can't duplicate struct\n");
 		return NULL;
 	}

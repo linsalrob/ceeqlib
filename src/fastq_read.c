@@ -49,11 +49,11 @@ int read_fastq(char *filename, struct fastq *seqs[]) {
 
 		chomp(line);
 		/* store the whole line */
-		nfq->name = strdup(line);
+		nfq->name = dupstr(line);
 
 		/* store the sequence ID */
 		line[strcspn(line, " ")] = '\0';
-		nfq->seqid = strdup(line);
+		nfq->seqid = dupstr(line);
 
 		/* read the sequence and save it */
 		fgets(line, MAXLINELEN, fp);
@@ -62,7 +62,7 @@ int read_fastq(char *filename, struct fastq *seqs[]) {
 			exit(1);
 		}
 		chomp(line);
-		nfq->seq = strdup(line);
+		nfq->seq = dupstr(line);
 
 		/* read the next line  and ignore it */
 		fgets(line, MAXLINELEN, fp);
@@ -74,7 +74,7 @@ int read_fastq(char *filename, struct fastq *seqs[]) {
 			exit(1);
 		}
 		chomp(line);
-		nfq->qual = strdup(line);
+		nfq->qual = dupstr(line);
 
 		if (add(nfq, "id", seqs) != NULL)
 			seqcounter++;

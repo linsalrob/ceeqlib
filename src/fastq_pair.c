@@ -48,31 +48,31 @@ int main(int argc, char* argv[]) {
 	 * Two ways to do this. Either via additional variables or directly. I chose directly.
 	char *paired = ".paired.fq";
 	char *single = ".single.fq";
-	char *lpfn = strcat(strdup(argv[1]), paired);
-	char *rpfn = strcat(strdup(argv[2]), paired);
+	char *lpfn = strcat(dupstr(argv[1]), paired);
+	char *rpfn = strcat(dupstr(argv[2]), paired);
 
-	char *lsfn = strcat(strdup(argv[1]), single);
-	char *rsfn = strcat(strdup(argv[2]), single);
+	char *lsfn = strcat(dupstr(argv[1]), single);
+	char *rsfn = strcat(dupstr(argv[2]), single);
 	*/
 
 
-	if ((left_paired = fopen(strcat(strdup(argv[1]), ".paired.fq"), "w")) == NULL) {
-		fprintf(stderr, "Can't open file %s\n", strcat(strdup(argv[1]), ".paired.fq"));
+	if ((left_paired = fopen(strcat(dupstr(argv[1]), ".paired.fq"), "w")) == NULL) {
+		fprintf(stderr, "Can't open file %s\n", strcat(dupstr(argv[1]), ".paired.fq"));
 		exit(1);
 	}
 
-	if ((left_single = fopen(strcat(strdup(argv[1]), ".single.fq"), "w")) == NULL) {
-		fprintf(stderr, "Can't open file %s\n", strcat(strdup(argv[1]), ".single.fq"));
+	if ((left_single = fopen(strcat(dupstr(argv[1]), ".single.fq"), "w")) == NULL) {
+		fprintf(stderr, "Can't open file %s\n", strcat(dupstr(argv[1]), ".single.fq"));
 		exit(1);
 	}
 
-	if ((right_paired = fopen(strcat(strdup(argv[2]), ".paired.fq"), "w")) == NULL) {
-		fprintf(stderr, "Can't open file %s\n", strcat(strdup(argv[2]), ".paired.fq"));
+	if ((right_paired = fopen(strcat(dupstr(argv[2]), ".paired.fq"), "w")) == NULL) {
+		fprintf(stderr, "Can't open file %s\n", strcat(dupstr(argv[2]), ".paired.fq"));
 		exit(1);
 	}
 
-	if ((right_single = fopen(strcat(strdup(argv[2]), ".single.fq"), "w")) == NULL) {
-		fprintf(stderr, "Can't open file %s\n", strcat(strdup(argv[2]), ".single.fq"));
+	if ((right_single = fopen(strcat(dupstr(argv[2]), ".single.fq"), "w")) == NULL) {
+		fprintf(stderr, "Can't open file %s\n", strcat(dupstr(argv[2]), ".single.fq"));
 		exit(1);
 	}
 
@@ -82,7 +82,7 @@ int main(int argc, char* argv[]) {
 	for (int i=0; i< HASHSIZE; i++)
 		for (ptr1 = seqs1[i]; ptr1 != NULL; ptr1 = ptr1->next) {
 			char *id = ptr1->seqid;
-			/* char *ori_id = strdup(id); */
+			/* char *ori_id = dupstr(id); */
 			int idx = strcspn(id, "/");
 			if (idx < strlen(id)) {
 				char rd = id[idx+1];
@@ -157,7 +157,7 @@ void recordseen(char s[], struct seenids *seen[]) {
 	int hashval = hash(s);
 	struct seenids *ptr;
 	ptr = (struct seenids *) malloc(sizeof(*ptr));
-	ptr->seqid = strdup(s);
+	ptr->seqid = dupstr(s);
 	ptr->next = seen[hashval];
 	seen[hashval]=ptr;
 }
