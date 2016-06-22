@@ -7,6 +7,7 @@
 
 #include "ceeqlib.h"
 #include "hash.h"
+#include "dupstr.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -22,7 +23,7 @@ char ** sequence_ids(struct fastq *seqs[], int nseqs) {
 	struct fastq *ptr;
 	for (int i=0; i< HASHSIZE; i++)
 		for (ptr = seqs[i]; ptr != NULL; ptr = ptr->next)
-			ids[j++] = strdup(ptr->seqid);
+			ids[j++] = dupstr(ptr->seqid);
 	return ids;
 }
 
