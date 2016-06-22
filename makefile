@@ -13,9 +13,11 @@ MAIN = ceeqlib
 FQFAS = fastq2fasta_sorted
 FQFA = fastq2fasta
 FQPAIR = fastq_pair
+TESTDS = testds
 
 SOURCEDIR = src
 EXCDIR = bin
+TESTDIR = tests
 
 # define the C source files
 
@@ -23,6 +25,10 @@ SRCS = $(filter-out $(addprefix $(SOURCEDIR)/, fastq_pair_fast.c fastq2fasta_sor
 FQFASSRC = $(addprefix $(SOURCEDIR)/, $(FQFAS).c fastq_read.c fastq_hash.c ids.c hash.c dupstr.c)
 FQFASRC = $(SOURCEDIR)/$(FQFA).c
 FQPAIRSRC = $(addprefix $(SOURCEDIR)/, fastq_pair_fast.c fastq_pair_stream.c hash.c dupstr.c)
+
+# define some tests
+TESTDSSRC = $(TESTDIR)/test_dupstr.c $(SOURCEDIR)/dupstr.c
+
 
 list:
 	@echo Sources: $(SRCS)
@@ -41,7 +47,7 @@ CFLAGS = -Wall -std=gnu99 -g -O3
 
 # define any directories containing header files other than /usr/include
 #
-INCLUDES = -I$(HOME)/include  -I../include
+INCLUDES = -I$(HOME)/include  -I../include -Isrc
 
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
@@ -63,6 +69,8 @@ OBJS = $(SRCS:.c=.o)
 FQFASORTOBJS = $(FQFASSRC:.c=.o)
 FQFAOBJ = $(FQFASRC:.c=.o)
 FQPAIROBJ = $(FQPAIRSRC:.c=.o)
+
+TESTDSOBJ = $(TESTDSSRC:.c=.o)
 
 #
 # The following part of the makefile is generic; it can be used to 
@@ -95,6 +103,12 @@ $(FQPAIR): $(FQPAIROBJ)| $(EXCDIR)
 
 $(EXCDIR):
 	mkdir -p $(EXCDIR)
+
+tests: $(TESTDS)
+
+$(TESTDS): $(TESTDSOBJ)
+	@echo Making test for duplicate string
+	$(CC) $(CFLAGS) $(INCLUDES) -g -o $(TESTDIR)/$(TESTDS) $(TESTDSOBJ) $(LFLAGS) $(LIBS)
 
 
 # this is a suffix replacement rule for building .o's from .c's
