@@ -47,4 +47,10 @@ or one of the individual commands:
 
 See Getting Started for more information on using ceeqlib.
 
+# What the programs do
 
+The current programs in the ceeq library are:
+
+1. `ceeq_fastq2fasta`: convert a fastq file to a fasta file
+2. `ceeq_fastq2fasta_sorted`: read a fastq file, sort the sequences and print the output as fasta
+3. `ceeq_fastq_pair`: take two fastq files and find the intersection and differences. The input is two files, left.fastq and right.fastq (you can call these what ever you want) and the output is four files: left.fastq.paired.fq and right.fastq.paired.fq have the paired sequences in the same order in each file; left.fastq.single.fq and right.fastq.single.fq have the unpaired sequences from each file respectively.
