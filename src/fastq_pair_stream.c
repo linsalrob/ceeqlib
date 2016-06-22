@@ -174,22 +174,34 @@ int fastq_pair_stream(char *left_fn, char *right_fn) {
 
 		/* figure out if the read has been seen before */
 
-		int idx = strcspn(seqid, "/");
-		if (idx < strlen(seqid)) {
-			char rd = seqid[idx+1];
-			if (rd == '1') {rd = '2';}
-			else if (rd == '2') {rd = '1';}
-			else {
-				fprintf(stderr, "Error: can't figure out whether %c at position %d is /1 or /2\n", rd, idx);
+		/*
+		 * Paired reads usually end either .1 and .2 or /1 and /2. Either way, the last character is the l/r direction.
+		 * We are going to get the last character of the sequence ID and test if it is a 1 or 2, and use the alternate.
+		 * If it is neither 1 or 2, at the moment we'll throw an error. I'm not sure if people also use f/r for forward
+		 * reverse, but we may need to add those
+		 */
+
+
+		int lastcharidx = strlen(seqid)-1;
+		char lastchar = seqid[lastcharidx];
+		switch(lastchar){
+			case '1':
+				seqid[lastcharidx] = '2';
+				break;
+			case '2':
+				seqid[lastcharidx] = '1';
+				break;
+			case 'f':
+				seqid[lastcharidx] = 'r';
+				break;
+			case 'r':
+				seqid[lastcharidx] = 'f';
+				break;
+			default:
+				fprintf(stderr, "The last character in the sequence id is %c and we don't know if this is a forward or reverse read.\n", lastchar);
 				exit(-1);
-			}
-			seqid[idx+1] = rd;
 		}
-		else {
-			fprintf(stderr, "%s does not appear to be from a paired end read. I expected it to have either /1 or /2\n", seqid);
-			exit(-1);
-		}
-		
+
 		int hashval = hash(seqid);
 		int found = 0;
 		struct fastq_pair_stream *ptr;
