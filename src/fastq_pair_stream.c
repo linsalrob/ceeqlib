@@ -102,22 +102,28 @@ int fastq_pair_stream(char *left_fn, char *right_fn) {
 	FILE * right_paired;
 	FILE * right_single;
 	
-	if ((left_paired = fopen(strcat(strdup(left_fn), ".paired.fq"), "w")) == NULL ) {
-		fprintf(stderr, "Can't open file %s\n", strcat(strdup(left_fn), ".paired.fq"));
+	char *lpfn = strcat(strdup(left_fn), ".paired.fq");
+	char *rpfn = strcat(strdup(right_fn), ".single.fq");
+	char *lsfn = strcat(strdup(left_fn), ".paired.fq");
+	char *rsfn = strcat(strdup(right_fn), ".single.fq");
+	printf("Writing the paired reads to %s and %s.\nWriting the single reads to %sand%s\n", lpfn, rpfn, lsfn, rsfn);
+
+	if ((left_paired = fopen(lpfn, "w")) == NULL ) {
+		fprintf(stderr, "Can't open file %s\n", lpfn);
 		exit(1);
 	}
 
-	if ((left_single = fopen(strcat(strdup(left_fn), ".single.fq"), "w")) == NULL) {
-		fprintf(stderr, "Can't open file %s\n", strcat(strdup(left_fn), ".single.fq"));
+	if ((left_single = fopen(lsfn, "w")) == NULL) {
+		fprintf(stderr, "Can't open file %s\n", lsfn);
 		exit(1);
 	}
-	if ((right_paired = fopen(strcat(strdup(right_fn), ".paired.fq"), "w")) == NULL) {
-		fprintf(stderr, "Can't open file %s\n", strcat(strdup(right_fn), ".paired.fq"));
+	if ((right_paired = fopen(rpfn, "w")) == NULL) {
+		fprintf(stderr, "Can't open file %s\n", rpfn);
 		exit(1);
 	}
 
-	if ((right_single = fopen(strcat(strdup(right_fn), ".single.fq"), "w")) == NULL) {
-		fprintf(stderr, "Can't open file %s\n", strcat(strdup(right_fn), ".single.fq"));
+	if ((right_single = fopen(rsfn, "w")) == NULL) {
+		fprintf(stderr, "Can't open file %s\n", rsfn);
 		exit(1);
 	}
 
