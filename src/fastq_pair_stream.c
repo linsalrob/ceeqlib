@@ -104,10 +104,16 @@ int fastq_pair_stream(char *left_fn, char *right_fn) {
 	FILE * right_paired;
 	FILE * right_single;
 	
-	char *lpfn = strcat(dupstr(left_fn), ".paired.fq");
-	char *rpfn = strcat(dupstr(right_fn), ".paired.fq");
-	char *lsfn = strcat(dupstr(left_fn), ".single.fq");
-	char *rsfn = strcat(dupstr(right_fn), ".single.fq");
+	char *lpfn = catstr(dupstr(left_fn), ".paired.fq");
+	char *rpfn = catstr(dupstr(right_fn), ".paired.fq");
+	char *lsfn = catstr(dupstr(left_fn), ".single.fq");
+	char *rsfn = catstr(dupstr(right_fn), ".single.fq");
+	/*
+	char *lpfn = "aaaaa.paired.fq";
+	char *rpfn = "bbbbb.paired.fq";
+	char *lsfn = "aaaaa.single.fq";
+	char *rsfn = "bbbbb.paired.fq";
+	*/
 	printf("Writing the paired reads to %s and %s.\nWriting the single reads to %s and %s\n", lpfn, rpfn, lsfn, rsfn);
 
 	if ((left_paired = fopen(lpfn, "w")) == NULL ) {
