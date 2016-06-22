@@ -27,8 +27,11 @@
 *.i*86
 *.x86_64
 *.hex
-bin/
 
 # Debug files
 *.dSYM/
 *.su
+
+# The output from compiled programs
+bin/
+tests/testds
