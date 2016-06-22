@@ -11,6 +11,7 @@
 #include "ceeqlib.h"
 #include "fastq_read.h"
 #include "fastq_hash.h"
+#include "dupstr.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

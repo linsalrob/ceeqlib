@@ -8,8 +8,9 @@
  * We could also save more memory by only storing the IDs from the first file, but that would require two passes through that file.
  */
 
-#include "hash.h"
 #include "fastq_pair_stream.h"
+#include "hash.h"
+#include "dupstr.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

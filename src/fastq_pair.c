@@ -10,6 +10,7 @@
 #include "fastq_hash.h"
 #include "fastq_pair.h"
 #include "hash.h"
+#include "dupstr.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
