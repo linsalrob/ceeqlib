@@ -83,6 +83,7 @@ int fastq_pair_stream(char *left_fn, char *right_fn) {
 			seqcounter++;
 
 		free(nfq);
+		free(line);
 
 	}
 
