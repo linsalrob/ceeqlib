@@ -35,6 +35,7 @@
 
 # The output from compiled programs
 tests/testds
+ceeq_dupstr/test
 
 # standard directories that we don't need to add
 bin/
