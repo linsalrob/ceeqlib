@@ -14,9 +14,9 @@ LIBLIB = lib$(LIBNAME)
 
 # directory locations
 SOURCEDIR = .
-LIBDIR = ../../lib
-INCDIR = ../../include
-BINDIR = ../../bin
+LIBDIR = ../lib
+INCDIR = ../include
+BINDIR = ../bin
 
 
 # define the C source files
