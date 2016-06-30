@@ -24,7 +24,9 @@ BINDIR = ../bin
 #SOURCES = $(wildcard $(SOURCEDIR)/*.c)
 SOURCES = ceeq_hash_fastq.c \
 	  ceeq_read_fastq.c \
-	  ceeq_get_seqs.c
+	  ceeq_read_fastq_gz.c \
+	  ceeq_get_seqs.c \
+	  ceeq_line_functions.c
 
 # define the C compiler to use
 CC = gcc
@@ -44,7 +46,7 @@ INCLUDES = -I$(HOME)/include  -I../include -Isrc -I$(INCDIR)
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
 #   their path using -Lpath, something like:
-LFLAGS = -L$(HOME)/lib  -L../lib -L$(LIBDIR) -lz -L$(HOME)/Dropbox/GitHubs/ceeqlib/lib -lceeq_fastq -lceeq_dupstr
+LFLAGS = -L$(HOME)/lib  -L$(LIBDIR) -L$(HOME)/Dropbox/GitHubs/ceeqlib/lib -lceeq_fastq -lceeq_dupstr -lz
 
 # define any libraries to link into executable:
 #   if I want to link in libraries (libx.so or libx.a) I use the -llibname 
@@ -88,8 +90,9 @@ help:
 all: $(LIBNAME)
 
 test:
-	$(RM) $(SOURCEDIR)/test
+	$(RM) $(SOURCEDIR)/test $(SOURCEDIR)/test_gz
 	$(CC) $(CFLAGS) $(INCLUDES) -o test test.c $(LFLAGS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o test_gz test_gz.c $(LFLAGS)
 
 install: |$(LIBDIR) $(INCDIR) $(LIBNAME)
 	cp $(LIBLIB).a $(LIBDIR)
@@ -116,7 +119,7 @@ $(INCDIR):
 # the rule(a .c file) and $@: the name of the target of the rule (a .o file) 
 # (see the gnu make manual section about automatic variables)
 .c.o:
-	$(CC) $(CFLAGS) $(INCLUDES) -c $<  -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $<  -o $@ $(LFLAGS)
 
 clean:
 	$(RM) $(SOURCEDIR)/*.o $(SOURCEDIR)/*~ $(SOURCEDIR)/*.a $(INCDIR)/$(LIBNAME).h $(LIBDIR)/$(LIBLIB).a $(SOURCEDIR)/test
