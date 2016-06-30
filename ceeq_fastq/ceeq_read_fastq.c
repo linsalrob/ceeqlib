@@ -21,8 +21,8 @@
  * By default we include the @ in the sequence identifier. 
  * This is a O(n) operation to remove (where n=length of id)
  * and so it is costly to do for every sequence. There is a pop
- * method here that you can use to remove that sign if you don't
- * want it.
+ * method in line_functions.c that you can use to remove that
+ * sign if you don't want it.
  *
  * Requires a pointer to a string for the file name, and a
  * pointer to the hash where we should store the data.
@@ -92,20 +92,8 @@ int read_fastq(char *filename, struct fastq *seqs[]) {
 
 	}
 
+	fclose(fp);
+
 	return seqcounter;
-}
-
-
-/* remove the newline from line */
-void chomp(char *line) {
-	line[strcspn(line, "\r\n")] = '\0';
-}
-
-/* remove the first character from the character array */
-void pop(char *line) {
-	int i;
-	for (i=1; line[i] != '\0'; i++)
-		line[i-1]=line[i];
-	line[i]='\0';
 }
 
