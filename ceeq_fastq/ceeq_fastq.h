@@ -63,8 +63,27 @@ struct fastq {
 
 #define MAXLINELEN 10000
 
-
+/* 
+ * read a fastq file from an uncompressed file
+ *
+ * This takes a file name and an array of structs that we'll use
+ * to create a hash of the sequences based on their IDs. 
+ *
+ * Note that we consider the ID to be from the @ to the first whitespace
+ * in the information line. We include the @ in the ID (to make things
+ * faster).
+ *
+ * We return the number of sequences read
+ */
 int read_fastq(char *filename, struct fastq *seqs[]);
+
+/*
+ * read a fastq file from a gzip compressed file
+ * this is analogous to the above method, and returns the same
+ * hashed data structure, but it reads a gzip compressed file.
+ */
+int read_fastq_gz(char *filename, struct fastq *seqs[]);
+
 /* remove the new line from a line read from a file */
 void chomp(char *);
 /* remove the first character from a pointer to a line */
