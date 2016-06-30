@@ -33,7 +33,7 @@ int read_fastq(char *filename, struct fastq *seqs[]) {
 
 	FILE *fp;
 
-	char line[MAXLINELEN];
+	char *line = malloc(sizeof(char) * MAXLINELEN + 1);
 	int seqcounter=0;
 
 	if ((fp = fopen(filename, "r")) == NULL) {
@@ -42,8 +42,8 @@ int read_fastq(char *filename, struct fastq *seqs[]) {
 	}
 
 	/* at the moment I'm using fgets, but I should probably change this to getline() */
-	char *ignored; /* this is to suppress a compiler warning*/
-	while ((ignored = fgets(line, MAXLINELEN, fp)) != NULL) {
+	char *fgets_check; /* this is to suppress a compiler warning*/
+	while ((fgets_check = fgets(line, MAXLINELEN, fp)) != NULL) {
 
 		/* define our fastq data element */
 		struct fastq *nfq;
@@ -64,7 +64,7 @@ int read_fastq(char *filename, struct fastq *seqs[]) {
 		nfq->id = dupstr(line);
 
 		/* read the sequence and save it */
-		ignored = fgets(line, MAXLINELEN, fp);
+		fgets_check = fgets(line, MAXLINELEN, fp);
 		if (line == NULL) {
 			fprintf(stderr, "There was no sequence for %s", nfq->info);
 			exit(1);
@@ -74,10 +74,10 @@ int read_fastq(char *filename, struct fastq *seqs[]) {
 		nfq->seq = dupstr(line);
 
 		/* read the next line  and ignore it */
-		ignored = fgets(line, MAXLINELEN, fp);
+		fgets_check = fgets(line, MAXLINELEN, fp);
 
 		/* read the quality scores and save them */
-		ignored = fgets(line, MAXLINELEN, fp);
+		fgets_check = fgets(line, MAXLINELEN, fp);
 		if (line == NULL) {
 			fprintf(stderr, "There were no quality scores for %s", nfq->info);
 			exit(1);

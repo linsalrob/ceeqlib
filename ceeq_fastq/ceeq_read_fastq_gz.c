@@ -34,7 +34,7 @@ int read_fastq_gz(char *filename, struct fastq *seqs[]) {
 
 	gzFile fp;
 
-	char line[MAXLINELEN];
+	char *line = malloc(sizeof(char) * MAXLINELEN + 1);
 	int seqcounter=0;
 
 	if ((fp = gzopen(filename, "r")) == NULL) {
@@ -42,8 +42,8 @@ int read_fastq_gz(char *filename, struct fastq *seqs[]) {
 		exit(1);
 	}
 
-	char *ignored; /* this is to suppress a compiler warning*/
-	while ((ignored = gzgets(fp, line, MAXLINELEN)) != NULL) {
+	char *fgets_check; /* this is to suppress a compiler warning*/
+	while ((fgets_check = gzgets(fp, line, MAXLINELEN)) != NULL) {
 
 		/* define our fastq data element */
 		struct fastq *nfq;
@@ -64,7 +64,7 @@ int read_fastq_gz(char *filename, struct fastq *seqs[]) {
 		nfq->id = dupstr(line);
 
 		/* read the sequence and save it */
-		ignored = gzgets(fp, line, MAXLINELEN);
+		fgets_check = gzgets(fp, line, MAXLINELEN);
 		if (line == NULL) {
 			fprintf(stderr, "There was no sequence for %s", nfq->info);
 			exit(1);
@@ -74,10 +74,10 @@ int read_fastq_gz(char *filename, struct fastq *seqs[]) {
 		nfq->seq = dupstr(line);
 
 		/* read the next line  and ignore it */
-		ignored = gzgets(fp, line, MAXLINELEN);
+		fgets_check = gzgets(fp, line, MAXLINELEN);
 
 		/* read the quality scores and save them */
-		ignored = gzgets(fp, line, MAXLINELEN);
+		fgets_check = gzgets(fp, line, MAXLINELEN);
 		if (line == NULL) {
 			fprintf(stderr, "There were no quality scores for %s", nfq->info);
 			exit(1);
