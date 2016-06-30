@@ -47,7 +47,7 @@ char *get_sequence(char *id, struct fastq *seqs[]) {
  * seqs is the hash
  * returns the quality scores or NULL if the sequence was not found
  */
-char *get_qualities(char *id, struct fastq *seqs[]) {
+char *get_quality(char *id, struct fastq *seqs[]) {
 	struct fastq *fq = seqs[hash(id)];
 	if (fq == NULL)
 		return NULL;

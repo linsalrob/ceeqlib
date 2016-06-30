@@ -98,7 +98,7 @@ int number_of_sequences(struct fastq *seqs[]);
 char *get_sequence(char *id, struct fastq *seqs[]);
 
 /* return the quality scores for a given ID */
-char *get_qualities(char *id, struct fastq *seqs[]);
+char *get_quality(char *id, struct fastq *seqs[]);
 
 /* get an array of the ids */
 int get_ids(char *ids[], struct fastq *seqs[]);
