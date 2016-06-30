@@ -23,7 +23,8 @@ BINDIR = ../bin
 
 #SOURCES = $(wildcard $(SOURCEDIR)/*.c)
 SOURCES = ceeq_hash_fastq.c \
-	  ceeq_read_fastq.c
+	  ceeq_read_fastq.c \
+	  ceeq_get_seqs.c
 
 # define the C compiler to use
 CC = gcc
@@ -43,7 +44,7 @@ INCLUDES = -I$(HOME)/include  -I../include -Isrc -I$(INCDIR)
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
 #   their path using -Lpath, something like:
-LFLAGS = -L$(HOME)/lib  -L../lib -L$(LIBDIR) -lz
+LFLAGS = -L$(HOME)/lib  -L../lib -L$(LIBDIR) -lz -L$(HOME)/Dropbox/GitHubs/ceeqlib/lib -lceeq_fastq -lceeq_dupstr
 
 # define any libraries to link into executable:
 #   if I want to link in libraries (libx.so or libx.a) I use the -llibname 
@@ -65,7 +66,7 @@ OBJS = $(SOURCES:.c=.o)
 # deleting dependencies appended to the file from 'make depend'
 #
 
-.PHONY: depend clean help install
+.PHONY: depend clean help install test
 
 
 # the help menu
@@ -79,11 +80,16 @@ help:
 	@echo "		make test	- make the test suite"
 	@echo "		make all	- make the library, install it, and make the test suite"
 	@echo "		make clean	- remove the library and installation files"
+	@echo "		make cleantest	- remove the compiled test suite
 	@echo ""
 	@echo "		make help	- show this help menu"
 
 
 all: $(LIBNAME)
+
+test:
+	$(RM) $(SOURCEDIR)/test
+	$(CC) $(CFLAGS) $(INCLUDES) -o test test.c $(LFLAGS)
 
 install: |$(LIBDIR) $(INCDIR) $(LIBNAME)
 	cp $(LIBLIB).a $(LIBDIR)
@@ -115,3 +121,5 @@ $(INCDIR):
 clean:
 	$(RM) $(SOURCEDIR)/*.o $(SOURCEDIR)/*~ $(SOURCEDIR)/*.a $(INCDIR)/$(LIBNAME).h $(LIBDIR)/$(LIBLIB).a $(SOURCEDIR)/test
 
+cleantest:
+	$(RM) $(SOURCEDIR)/test
