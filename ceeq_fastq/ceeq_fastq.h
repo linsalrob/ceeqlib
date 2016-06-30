@@ -65,20 +65,19 @@ struct fastq {
 
 
 int read_fastq(char *filename, struct fastq *seqs[]);
+/* remove the new line from a line read from a file */
 void chomp(char *);
-
-
-
-
+/* remove the first character from a pointer to a line */
+void pop(char *);
 
 /* 
  * PROTOTYPES AND DEFINITIONS FOR THE HASH DATASTRUCTURE
  *
  */
 
+#define HASHSIZE 1000
 
-
-/* our hashCode should return an integer modded on the table size */
+/* hash returns an integer already modded on the table size */
 unsigned hash (char *);
 
 struct fastq *lookup(char *, struct fastq *seqs[]);
@@ -86,6 +85,23 @@ struct fastq *lookup(char *, struct fastq *seqs[]);
 struct fastq *add(struct fastq *, char [], struct fastq *seqs[]);
 
 
+
+/* 
+ * PROTOTYPES AND DEFINITIONS FOR THE GET SEQUENCES FUNCTIONS
+ *
+ */
+
+/* return the number of sequences in the hash */
+int number_of_sequences(struct fastq *seqs[]);
+
+/* return the DNA sequence for a given ID */
+char *get_sequence(char *id, struct fastq *seqs[]);
+
+/* return the quality scores for a given ID */
+char *get_qualities(char *id, struct fastq *seqs[]);
+
+/* get an array of the ids */
+int get_ids(char *ids[], struct fastq *seqs[]);
 
 
 #endif /* CEEQ_FASTQ_H */
