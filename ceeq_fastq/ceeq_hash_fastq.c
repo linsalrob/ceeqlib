@@ -13,6 +13,23 @@
 
 
 
+/* 
+ * calculate the hash for a fastq sequence
+ *
+ * This is a simple hash but widely used!
+ *
+ * we use an unsigned here so that the answer is > 0 
+ */
+
+unsigned hash (char *s) {
+	unsigned hashval;
+
+	for (hashval=0; *s != '\0'; s++)
+		hashval = *s + 31 * hashval;
+	return hashval % HASHSIZE;
+}
+
+
 
 /* look up an entry based on its hash function.
  * If it is there we return a pointer otherwise we return NULL
