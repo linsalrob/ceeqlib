@@ -37,6 +37,7 @@
 tests/testds
 ceeq_dupstr/test
 ceeq_fastq/test
+ceeq_fastq/test_gz
 
 # standard directories that we don't need to add
 bin/
