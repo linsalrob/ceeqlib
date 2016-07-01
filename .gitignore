@@ -36,7 +36,7 @@ core*
 
 # The output from compiled programs
 tests/testds
-ceeq_dupstr/test
+ceeq_str/test
 ceeq_fastq/test
 ceeq_fastq/test_gz
 
