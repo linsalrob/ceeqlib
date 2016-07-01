@@ -26,6 +26,7 @@ SOURCES = ceeq_hash_fastq.c \
 	  ceeq_read_fastq.c \
 	  ceeq_read_fastq_gz.c \
 	  ceeq_get_seqs.c \
+	  ceeq_print.c
 
 # define the C compiler to use
 CC = gcc
@@ -45,7 +46,7 @@ INCLUDES = -I$(HOME)/include  -I../include -Isrc -I$(INCDIR)
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
 #   their path using -Lpath, something like:
-LFLAGS = -L$(HOME)/lib  -L$(LIBDIR) -L$(HOME)/Dropbox/GitHubs/ceeqlib/lib -lceeq_fastq -lceeq_dupstr -lz
+LFLAGS = -L$(HOME)/lib  -L$(LIBDIR) -L$(HOME)/Dropbox/GitHubs/ceeqlib/lib -lceeq_fastq -lceeq_str -lz
 
 # define any libraries to link into executable:
 #   if I want to link in libraries (libx.so or libx.a) I use the -llibname 
@@ -79,14 +80,18 @@ help:
 	@echo "Options:"
 	@echo "		make $(LIBNAME) - make the library"
 	@echo "		make test	- make the test suite"
-	@echo "		make all	- make the library, install it, and make the test suite"
+	@echo "		make all 	- make the library "
+	@echo "		make install	- make the library, install it, and make the test suite"
 	@echo "		make clean	- remove the library and installation files"
-	@echo "		make cleantest	- remove the compiled test suite
+	@echo "		make cleantest	- remove the compiled test suite"
+	@echo "		make reinstall	- remove everything and install again"
 	@echo ""
 	@echo "		make help	- show this help menu"
 
 
 all: $(LIBNAME)
+
+reinstall: clean $(LIBNAME) install test
 
 test: cleantest
 	$(CC) $(CFLAGS) $(INCLUDES) -o test test.c $(LFLAGS)
@@ -95,6 +100,7 @@ test: cleantest
 install: |$(LIBDIR) $(INCDIR) $(LIBNAME)
 	cp $(LIBLIB).a $(LIBDIR)
 	cp $(LIBNAME).h $(INCDIR)
+
 
 
 $(LIBNAME): $(OBJS)

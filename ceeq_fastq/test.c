@@ -13,6 +13,8 @@
 #define ESEQS 5 // the number of sequences we expect to find in the file!
 
 
+#define TESTPRINT 0 // this is a boolean that determines whether we test printing fastq and fasta sequences. You can leave this set to 0 
+
 
 
 int main(int argc, char *argv[]) {
@@ -73,6 +75,12 @@ int main(int argc, char *argv[]) {
 		error++;
 	}
 
+	if (TESTPRINT) {
+		printf("Printing the sequences\n");
+		print_fastq(seqs);
+		printf("\n\n");
+		print_fasta(seqs);
+	}
 
 
 	
@@ -80,7 +88,8 @@ int main(int argc, char *argv[]) {
 		fprintf(stderr, "There were %d errors when running the tests\n", error);
 	else
 		fprintf(stderr, "All tests passed\n");
-	
+
+
 	exit(error);
 
 }
