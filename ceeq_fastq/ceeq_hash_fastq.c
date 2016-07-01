@@ -6,7 +6,7 @@
  */
 
 #include "ceeq_fastq.h"
-#include <ceeq_dupstr.h>
+#include <ceeq_str.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>

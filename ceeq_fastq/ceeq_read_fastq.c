@@ -9,7 +9,7 @@
 
 
 #include "ceeq_fastq.h"
-#include <ceeq_dupstr.h>
+#include <ceeq_str.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -21,7 +21,7 @@
  * By default we include the @ in the sequence identifier. 
  * This is a O(n) operation to remove (where n=length of id)
  * and so it is costly to do for every sequence. There is a pop
- * method in line_functions.c that you can use to remove that
+ * method in ceeq_str.c that you can use to remove that
  * sign if you don't want it.
  *
  * Requires a pointer to a string for the file name, and a
@@ -41,7 +41,6 @@ int read_fastq(char *filename, struct fastq *seqs[]) {
 		exit(1);
 	}
 
-	/* at the moment I'm using fgets, but I should probably change this to getline() */
 	char *fgets_check; /* this is to suppress a compiler warning*/
 	while ((fgets_check = fgets(line, MAXLINELEN, fp)) != NULL) {
 
@@ -53,15 +52,11 @@ int read_fastq(char *filename, struct fastq *seqs[]) {
 			return 0;
 		}
 
-		chomp(line);
-		// pop(line);
-
 		/* store the whole line */
-		nfq->info = dupstr(line);
+		nfq->info = chomp(line);
 
 		/* store the sequence ID */
-		line[strcspn(line, " ")] = '\0';
-		nfq->id = dupstr(line);
+		nfq->id = firstword(line);
 
 		/* read the sequence and save it */
 		fgets_check = fgets(line, MAXLINELEN, fp);
@@ -69,9 +64,7 @@ int read_fastq(char *filename, struct fastq *seqs[]) {
 			fprintf(stderr, "There was no sequence for %s", nfq->info);
 			exit(1);
 		}
-
-		chomp(line);
-		nfq->seq = dupstr(line);
+		nfq->seq = chomp(line);
 
 		/* read the next line  and ignore it */
 		fgets_check = fgets(line, MAXLINELEN, fp);
@@ -82,8 +75,7 @@ int read_fastq(char *filename, struct fastq *seqs[]) {
 			fprintf(stderr, "There were no quality scores for %s", nfq->info);
 			exit(1);
 		}
-		chomp(line);
-		nfq->qual = dupstr(line);
+		nfq->qual = chomp(line);
 
 		if (add(nfq, "id", seqs) != NULL)
 			seqcounter++;

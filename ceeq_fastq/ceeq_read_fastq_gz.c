@@ -9,7 +9,7 @@
 
 
 #include "ceeq_fastq.h"
-#include <ceeq_dupstr.h>
+#include <ceeq_str.h>
 #include <zlib.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -53,15 +53,11 @@ int read_fastq_gz(char *filename, struct fastq *seqs[]) {
 			return 0;
 		}
 
-		chomp(line);
-		// pop(line);
-
 		/* store the whole line */
-		nfq->info = dupstr(line);
+		nfq->info = chomp(line);
 
 		/* store the sequence ID */
-		line[strcspn(line, " ")] = '\0';
-		nfq->id = dupstr(line);
+		nfq->id = firstword(line);
 
 		/* read the sequence and save it */
 		fgets_check = gzgets(fp, line, MAXLINELEN);
@@ -70,8 +66,7 @@ int read_fastq_gz(char *filename, struct fastq *seqs[]) {
 			exit(1);
 		}
 
-		chomp(line);
-		nfq->seq = dupstr(line);
+		nfq->seq = chomp(line);
 
 		/* read the next line  and ignore it */
 		fgets_check = gzgets(fp, line, MAXLINELEN);
@@ -82,14 +77,12 @@ int read_fastq_gz(char *filename, struct fastq *seqs[]) {
 			fprintf(stderr, "There were no quality scores for %s", nfq->info);
 			exit(1);
 		}
-		chomp(line);
-		nfq->qual = dupstr(line);
+		nfq->qual = chomp(line);
 
 		if (add(nfq, "id", seqs) != NULL)
 			seqcounter++;
 		else
 			fprintf(stderr, "We got an error adding %s\n", nfq->id);
-
 	}
 
 	gzclose(fp);

@@ -84,10 +84,6 @@ int read_fastq(char *filename, struct fastq *seqs[]);
  */
 int read_fastq_gz(char *filename, struct fastq *seqs[]);
 
-/* remove the new line from a line read from a file */
-void chomp(char *);
-/* remove the first character from a pointer to a line */
-void pop(char *);
 
 /* 
  * PROTOTYPES AND DEFINITIONS FOR THE HASH DATASTRUCTURE
@@ -122,6 +118,32 @@ char *get_quality(char *id, struct fastq *seqs[]);
 /* get an array of the ids */
 int get_ids(char *ids[], struct fastq *seqs[]);
 
+
+// PROTOTYPES FOR PRINTING THE SEQUENCES
+
+/* 
+ * print_fastq
+ *
+ * Print the sequence data structure in fastq format
+ * This will not be exactly round robin, because we 
+ * do not print the id on the line between the sequences
+ * and the quality scores. That is optional and some
+ * people do it. But we do not.
+ *
+ */
+
+void print_fastq(struct fastq *seqs[]);
+
+
+/*
+ * print_fasta
+ *
+ * Print a fasta version of this data. This does not
+ * print the quality scores out.
+ *
+ */
+
+void print_fasta(struct fastq *seqs[]);
 
 #endif /* CEEQ_FASTQ_H */
 
