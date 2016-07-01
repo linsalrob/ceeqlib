@@ -8,7 +8,7 @@
 
 
 # define the executable file 
-LIBNAME = ceeq_dupstr
+LIBNAME = ceeq_str
 
 # the name of the library
 LIBLIB = lib$(LIBNAME)
@@ -23,7 +23,7 @@ BINDIR = ../bin
 # define the C source files
 
 #SOURCES = $(wildcard $(SOURCEDIR)/*.c)
-SOURCES = $(LIBNAME).c
+SOURCES = ceeq_str.c  ceeq_line_functions.c
 
 # define the C compiler to use
 CC = gcc
@@ -43,7 +43,7 @@ INCLUDES = -I$(HOME)/include  -I../include -Isrc -I$(INCDIR)
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
 #   their path using -Lpath, something like:
-LFLAGS = -L$(HOME)/lib  -L../lib -L$(LIBDIR) -lz
+LFLAGS = -L$(HOME)/lib  -L$(LIBDIR) -lz
 
 # define any libraries to link into executable:
 #   if I want to link in libraries (libx.so or libx.a) I use the -llibname 
@@ -85,6 +85,7 @@ help:
 all: $(LIBNAME) test
 
 test: install
+	$(RM) test
 	$(CC) $(CFLAGS) $(INCLUDES) -o test test.c $(LFLAGS) -l$(LIBNAME) 
 
 

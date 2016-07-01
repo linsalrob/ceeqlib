@@ -6,7 +6,7 @@
  * For more information see http://stackoverflow.com/questions/8359966/strdup-returning-address-out-of-bounds
  */
 
-#include "ceeq_dupstr.h"
+#include "ceeq_str.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>

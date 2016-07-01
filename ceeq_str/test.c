@@ -1,9 +1,10 @@
 /*
- * Test dupstr library to make sure works as expected!
+ * Test str library to make sure works as expected!
  */
 
-#include <ceeq_dupstr.h>
+#include <ceeq_str.h>
 #include <stdio.h>
+#include <string.h>
 
 int main(int argc, char *argv[]) {
 	char *s1 = "string one";
@@ -15,6 +16,14 @@ int main(int argc, char *argv[]) {
 	
 	char *sc = catstr(s1, s2);
 	printf("'%s' and '%s' were concatenated to '%s'\n", s1, s2, sc);
+
+	char *s3 = "string three\n";
+	printf("This string with a new line: %s\n", s3);
+	s3 = chomp(s3);
+	printf("Was chomped to remove the new line: %s\n", s3);
+	
+	s3 = pop(s3);
+	printf("And now there is no s: %s\n", s3);
 }
 
 
