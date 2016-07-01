@@ -27,4 +27,7 @@ char *chomp(char *);
 /* remove the first character from a pointer to a line */
 char *pop(char *);
 
+/* get the substring of the first word (ie. upto the first white space character) if there is one in the string */
+char *firstword(char *line);
+
 #endif /* CEEQ_STR_H_ */

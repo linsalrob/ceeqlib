@@ -1,6 +1,7 @@
 
 #include "ceeq_str.h"
 #include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 /* 
@@ -22,6 +23,19 @@ char *chomp(char *line) {
 char *pop(char *line) {
 	line++;
 	return line;
+}
+
+
+/* get the substring upto the first white space character if there is one in the string */
+char *firstword(char *line) {
+	int idx = strcspn(line, " \n\r\t");
+	char *newline = malloc(sizeof(char) * idx + 1);
+	if (newline == NULL) {
+		fprintf(stderr, "Couldn't allocate memory for newline\n");
+		exit(1);
+	}
+	strncpy(newline, line, idx);
+	return newline;
 }
 
 

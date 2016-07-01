@@ -24,6 +24,10 @@ int main(int argc, char *argv[]) {
 	
 	s3 = pop(s3);
 	printf("And now there is no s: %s\n", s3);
+
+	printf("For string '%s'\n", s1);
+	char *fw = firstword(s1);
+	printf("The first word is '%s'\n", fw);
 }
 
 
