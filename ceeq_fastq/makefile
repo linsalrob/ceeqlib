@@ -26,7 +26,6 @@ SOURCES = ceeq_hash_fastq.c \
 	  ceeq_read_fastq.c \
 	  ceeq_read_fastq_gz.c \
 	  ceeq_get_seqs.c \
-	  ceeq_line_functions.c
 
 # define the C compiler to use
 CC = gcc
@@ -68,7 +67,7 @@ OBJS = $(SOURCES:.c=.o)
 # deleting dependencies appended to the file from 'make depend'
 #
 
-.PHONY: depend clean help install test
+.PHONY: depend clean help install test cleantest
 
 
 # the help menu
@@ -89,8 +88,7 @@ help:
 
 all: $(LIBNAME)
 
-test:
-	$(RM) $(SOURCEDIR)/test $(SOURCEDIR)/test_gz
+test: cleantest
 	$(CC) $(CFLAGS) $(INCLUDES) -o test test.c $(LFLAGS)
 	$(CC) $(CFLAGS) $(INCLUDES) -o test_gz test_gz.c $(LFLAGS)
 
@@ -121,8 +119,8 @@ $(INCDIR):
 .c.o:
 	$(CC) $(CFLAGS) $(INCLUDES) -c $<  -o $@ $(LFLAGS)
 
-clean:
-	$(RM) $(SOURCEDIR)/*.o $(SOURCEDIR)/*~ $(SOURCEDIR)/*.a $(INCDIR)/$(LIBNAME).h $(LIBDIR)/$(LIBLIB).a $(SOURCEDIR)/test
+clean: cleantest
+	$(RM) $(SOURCEDIR)/*.o $(SOURCEDIR)/*~ $(SOURCEDIR)/*.a $(INCDIR)/$(LIBNAME).h $(LIBDIR)/$(LIBLIB).a
 
 cleantest:
-	$(RM) $(SOURCEDIR)/test
+	$(RM) $(SOURCEDIR)/test $(SOURCEDIR)/test_gz
