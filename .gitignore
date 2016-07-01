@@ -32,12 +32,14 @@
 *.dSYM/
 *.su
 *.swp
+core*
 
 # The output from compiled programs
 tests/testds
 ceeq_dupstr/test
 ceeq_fastq/test
 ceeq_fastq/test_gz
+
 
 # standard directories that we don't need to add
 bin/
