@@ -3,6 +3,11 @@ ceeqlib (pronounced seq-lib) is a library written in C for manipulating fastq an
 
 ceeqlib is written in pure C using only the standard library to ensure portability among machines. See the Installation section.
 
+# Refactoring
+
+We're refactoring ceeqlib to be a series of libraries that you can use. The first library is ceeq_fastq which will read and write fastq data in a variety of formats, and use the data in different programs.
+
+
 
 # Getting started
 
