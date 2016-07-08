@@ -28,12 +28,9 @@
 char **subsample_n(int nseqs, char *arr[], int n) {
 	shuffle(nseqs, arr);
 	char **newarr = (char **) malloc(sizeof(char*) * n + 1);
-	fprintf(stderr, "Copying\n");
-	for (int i=0; i<n; i++) {
-		fprintf(stderr, "copying %d\n", i);
+	for (int i=0; i<n; i++)
 		newarr[i] = dupstr(arr[i]);
-	}
-	fprintf(stderr, "Done copying\n");
+	
 	return newarr;
 }
 
