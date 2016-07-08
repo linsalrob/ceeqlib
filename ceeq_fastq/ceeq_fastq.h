@@ -90,7 +90,7 @@ int read_fastq_gz(char *filename, struct fastq *seqs[]);
  *
  */
 
-#define HASHSIZE 1000
+#define HASHSIZE 10000
 
 /* hash returns an integer already modded on the table size */
 unsigned hash (char *);
