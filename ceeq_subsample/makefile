@@ -121,7 +121,7 @@ $(INCDIR):
 	$(CC) $(CFLAGS) $(INCLUDES) -c $<  -o $@ $(LFLAGS)
 
 clean: cleantest
-	$(RM) $(SOURCEDIR)/*.o $(SOURCEDIR)/*~ $(SOURCEDIR)/*.a $(INCDIR)/$(LIBNAME).h $(LIBDIR)/$(LIBLIB).a
+	$(RM) $(SOURCEDIR)/*.o $(SOURCEDIR)/*~ $(SOURCEDIR)/*.a $(INCDIR)/$(LIBNAME).h $(LIBDIR)/$(LIBLIB).a $(SOURCEDIR)/core
 
 cleantest:
 	$(RM) $(SOURCEDIR)/test $(SOURCEDIR)/test_gz
