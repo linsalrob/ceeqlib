@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
 		fprintf(stderr, "Please provide some arguments and we'll shuffle them\n");
 		exit(1);
 	}
-	shuffle(argc-1, argv);
+	shuffle(argc, argv);
 	for (int i=0; i<argc; i++)
 		printf("%s\n", argv[i]);
 }
