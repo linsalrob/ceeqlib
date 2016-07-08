@@ -12,10 +12,14 @@
 #include <stdio.h>
 
 char *dupstr(const char *s) {
+	if (s == NULL) {
+		fprintf(stderr, "Cannot duplicate a NULL string\n");
+		return NULL;
+	}
 	char *const result = malloc(strlen(s) + 1);
 	if (result == NULL) {
 		fprintf(stderr, "Cannot allocate memory to duplicate %s\n", s);
-		exit(1);
+		return NULL;
 	}
 	strcpy(result, s);
 	return result;
