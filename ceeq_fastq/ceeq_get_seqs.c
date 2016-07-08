@@ -68,12 +68,10 @@ char *get_quality(char *id, struct fastq *seqs[]) {
 int get_ids(char *ids[], struct fastq *seqs[]) {
 	struct fastq *fq;
 	int j = 0;
-	for (int i=0; i<=HASHSIZE; i++) {
+	for (int i=0; i<HASHSIZE; i++) {
 		fq = seqs[i];
 		while ((fq != NULL) && (ids[j++] = fq->id) && (fq = fq->next))
 			;
-		if (fq != NULL)
-			ids[j++] = fq->id;
 	}
 
 	return j;
