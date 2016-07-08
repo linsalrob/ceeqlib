@@ -36,4 +36,30 @@ char **subsample_n(int nseqs, char *arr[], int n) {
 
 
 
+int subsample(int nseqs, char *fastqfile) {
+
+	// read the fastq file into our hash called seqs
+	
+	struct fastq *seqs[HASHSIZE] = {NULL};
+	int read_seqs = read_fastq(fastqfile, seqs);
+	if (read_seqs < nseqs) {
+		fprintf(stderr, "You requested %d sequences but there are only %d in the file!\n", nseqs, read_seqs);
+		nseqs = read_seqs;
+	}
+
+	// get all the ids from the sequences
+	char *ids[read_seqs];
+	get_ids(ids, seqs);
+
+	// subsample those IDs 
+	char **subsample = subsample_n(read_seqs, ids, nseqs);
+
+	for (int i=0; i<nseqs; i++) {
+		char *seq = get_sequence(subsample[i], seqs);
+		char *qua = get_quality(subsample[i], seqs);
+		printf("%s\n%s\n+\n%s\n", subsample[i], seq, qua);
+	}
+	return nseqs;
+}
+
 
