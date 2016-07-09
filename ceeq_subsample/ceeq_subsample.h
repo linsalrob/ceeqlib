@@ -14,6 +14,6 @@
  */
 char **subsample_n(int nseqs, char *arr[], int n);
 
-int subsample(int, char *);
+int subsample(int, char *, int);
 
 #endif /* CEEQ_SUBSAMPLE_H */

@@ -34,14 +34,28 @@ char **subsample_n(int nseqs, char *arr[], int n) {
 	return newarr;
 }
 
+/* 
+ * subsample a fastq file. 
+ *
+ * Retriece nseqs sequences (or all the sequences in the file if nseqs is too small)
+ * from fastqfile.
+ *
+ * Optionally, compressed can be set to true to use a gzipped file
+ *
+ */
 
-
-int subsample(int nseqs, char *fastqfile) {
+int subsample(int nseqs, char *fastqfile, int compressed) {
 
 	// read the fastq file into our hash called seqs
 	
 	struct fastq *seqs[HASHSIZE] = {NULL};
-	int read_seqs = read_fastq(fastqfile, seqs);
+
+	int read_seqs = 0;
+	if (compressed)
+		read_seqs = read_fastq_gz(fastqfile, seqs);
+	else
+		read_seqs = read_fastq(fastqfile, seqs);
+
 	if (read_seqs < nseqs) {
 		fprintf(stderr, "You requested %d sequences but there are only %d in the file!\n", nseqs, read_seqs);
 		nseqs = read_seqs;
