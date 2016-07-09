@@ -42,7 +42,7 @@ INCLUDES = -I$(HOME)/include  -I../include -Isrc -I$(INCDIR)
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
 #   their path using -Lpath, something like:
-LFLAGS = -L$(HOME)/lib  -L$(LIBDIR) -L$(HOME)/Dropbox/GitHubs/ceeqlib/lib -lceeq_fastq -lceeq_str -lz
+LFLAGS = -L$(HOME)/lib  -L$(LIBDIR) -L$(HOME)/Dropbox/GitHubs/ceeqlib/lib -lceeq_fastq -lceeq_arr -lceeq_str -lz
 
 # define any libraries to link into executable:
 #   if I want to link in libraries (libx.so or libx.a) I use the -llibname 
@@ -90,7 +90,10 @@ all: $(LIBNAME)
 reinstall: clean $(LIBNAME) install test
 
 test: cleantest
-	$(CC) $(CFLAGS) $(INCLUDES) -o test test.c -lceeq_subsample -lceeq_arr $(LFLAGS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o test test.c -lceeq_subsample $(LFLAGS)
+
+subsample: install
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(BINDIR)/subsample_reads subsample_reads.c -lceeq_subsample $(LFLAGS)
 
 install: |$(LIBDIR) $(INCDIR) $(LIBNAME)
 	cp $(LIBLIB).a $(LIBDIR)
@@ -121,7 +124,7 @@ $(INCDIR):
 	$(CC) $(CFLAGS) $(INCLUDES) -c $<  -o $@ $(LFLAGS)
 
 clean: cleantest
-	$(RM) $(SOURCEDIR)/*.o $(SOURCEDIR)/*~ $(SOURCEDIR)/*.a $(INCDIR)/$(LIBNAME).h $(LIBDIR)/$(LIBLIB).a $(SOURCEDIR)/core
+	$(RM) $(SOURCEDIR)/*.o $(SOURCEDIR)/*~ $(SOURCEDIR)/*.a $(INCDIR)/$(LIBNAME).h $(LIBDIR)/$(LIBLIB).a $(SOURCEDIR)/core $(BINDIR)/subsample_reads
 
 cleantest:
 	$(RM) $(SOURCEDIR)/test $(SOURCEDIR)/test_gz
