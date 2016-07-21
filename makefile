@@ -41,7 +41,7 @@ ceeq_fastq: ceeq_str
 	$(MAKE) -C ceeq_fastq install
 
 ceeq_subsample: ceeq_fastq ceeq_arr
-	$(MAKE) -C ceeq_subsample install
+	$(MAKE) -C ceeq_subsample all
 
 
 
