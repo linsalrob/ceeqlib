@@ -18,6 +18,11 @@
  */
 void shuffle(int size, char *arr[]);
 
+/*
+ * Swop two elements in an array. Given an array of pointers and 
+ * two locations we swap the two elements. This is a conveniene method!
+ */
+
 void swop(char *arr[], int, int);
 
 

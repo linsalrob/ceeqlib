@@ -18,7 +18,6 @@
 #ifndef CEEQ_FASTQ_H
 #define CEEQ_FASTQ_H
 
-#define VERSION 0.2
 
 
 /* 
@@ -95,8 +94,23 @@ int read_fastq_gz(char *filename, struct fastq *seqs[]);
 /* hash returns an integer already modded on the table size */
 unsigned hash (char *);
 
+/* 
+ * Look up an entry based on its hash function.
+ * If it is there we return a pointer otherwise we return NULL
+ */
+
 struct fastq *lookup(char *, struct fastq *seqs[]);
 
+/* 
+ * Add a sequence to the hash.
+ *
+ * The first argument is our fastq structure
+ * The second argument is one of "info" (for the whole id line), "seq" or "sequence" (to hash by the sequence), 
+ * "id" to hash by the first word on the id line. The default is to use "id".
+ *
+ * The third argument is a pointer to an array of structs that is our hash
+ *
+ */
 struct fastq *add(struct fastq *, char [], struct fastq *seqs[]);
 
 
