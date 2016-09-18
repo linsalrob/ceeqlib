@@ -89,7 +89,7 @@ help:
 	@echo "		make help	- show this help menu"
 
 
-all: $(LIBNAME)
+all: clean $(LIBNAME) install test
 
 reinstall: clean $(LIBNAME) install test
 
