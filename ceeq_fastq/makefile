@@ -94,8 +94,8 @@ all: $(LIBNAME)
 reinstall: clean $(LIBNAME) install test
 
 test: cleantest
-	$(CC) $(CFLAGS) $(INCLUDES) -o test test.c $(LFLAGS)
-	$(CC) $(CFLAGS) $(INCLUDES) -o test_gz test_gz.c $(LFLAGS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o ../tests/test_reading_fastq test.c $(LFLAGS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o ../tests/test_reading_gz_fastq test_gz.c $(LFLAGS)
 
 install: |$(LIBDIR) $(INCDIR) $(LIBNAME)
 	cp $(LIBLIB).a $(LIBDIR)
@@ -129,4 +129,5 @@ clean: cleantest
 	$(RM) $(SOURCEDIR)/*.o $(SOURCEDIR)/*~ $(SOURCEDIR)/*.a $(INCDIR)/$(LIBNAME).h $(LIBDIR)/$(LIBLIB).a
 
 cleantest:
-	$(RM) $(SOURCEDIR)/test $(SOURCEDIR)/test_gz
+	$(RM) ../tests/test_reading_gz_fastq ../tests/test_reading_fastq
+
