@@ -85,8 +85,8 @@ help:
 all: $(LIBNAME) test
 
 test: install
-	$(RM) test
-	$(CC) $(CFLAGS) $(INCLUDES) -o test test.c $(LFLAGS) -l$(LIBNAME) 
+	$(RM) ../tests/test_ceeq_str
+	$(CC) $(CFLAGS) $(INCLUDES) -o ../tests/test_ceeq_str test.c $(LFLAGS) -l$(LIBNAME) 
 
 
 install: |$(LIBDIR) $(INCDIR) $(LIBNAME)
