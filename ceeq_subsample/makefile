@@ -90,7 +90,7 @@ all: $(LIBNAME) subsample
 reinstall: clean $(LIBNAME) install test
 
 test: cleantest
-	$(CC) $(CFLAGS) $(INCLUDES) -o test test.c -lceeq_subsample $(LFLAGS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o ../tests/test_ceeq_subsample test.c -lceeq_subsample $(LFLAGS)
 
 subsample: install
 	$(CC) $(CFLAGS) $(INCLUDES) -o $(BINDIR)/ceeq_subsample_reads subsample_reads.c -lceeq_subsample $(LFLAGS)
@@ -127,4 +127,4 @@ clean: cleantest
 	$(RM) $(SOURCEDIR)/*.o $(SOURCEDIR)/*~ $(SOURCEDIR)/*.a $(INCDIR)/$(LIBNAME).h $(LIBDIR)/$(LIBLIB).a $(SOURCEDIR)/core $(BINDIR)/ceeq_subsample_reads
 
 cleantest:
-	$(RM) $(SOURCEDIR)/test $(SOURCEDIR)/test_gz
+	$(RM) ../tests/test_ceeq_subsample
