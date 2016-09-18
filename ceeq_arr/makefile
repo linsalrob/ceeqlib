@@ -86,8 +86,8 @@ help:
 all: $(LIBNAME) test
 
 test: install
-	$(RM) test
-	$(CC) $(CFLAGS) $(INCLUDES) -o test test.c $(LFLAGS) -l$(LIBNAME) 
+	$(RM) ../tests/test_ceeq_arr
+	$(CC) $(CFLAGS) $(INCLUDES) -o ../tests/test_ceeq_arr test.c $(LFLAGS) -l$(LIBNAME) 
 
 
 install: |$(LIBDIR) $(INCDIR) $(LIBNAME)
@@ -118,5 +118,5 @@ $(INCDIR):
 	$(CC) $(CFLAGS) $(INCLUDES) -c $<  -o $@
 
 clean:
-	$(RM) $(SOURCEDIR)/*.o $(SOURCEDIR)/*~ $(SOURCEDIR)/*.a $(INCDIR)/$(LIBNAME).h $(LIBDIR)/$(LIBLIB).a $(SOURCEDIR)/test
+	$(RM) $(SOURCEDIR)/*.o $(SOURCEDIR)/*~ $(SOURCEDIR)/*.a $(INCDIR)/$(LIBNAME).h $(LIBDIR)/$(LIBLIB).a ../tests/test_ceeq_arr
 
