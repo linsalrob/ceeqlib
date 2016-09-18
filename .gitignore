@@ -35,9 +35,7 @@
 core*
 
 # The output from compiled programs
-tests/testds
-*/test
-*/test_gz
+tests/*
 
 
 # standard directories that we don't need to add
