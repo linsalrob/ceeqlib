@@ -26,6 +26,19 @@ void shuffle(int size, char *arr[]);
 void swop(char *arr[], int, int);
 
 
+/*
+ * Sum all the numbers in an array at the pointer to this array.
+ *
+ * Parameters:
+ * 	A pointer to the array
+ *
+ * Returns:
+ * 	The sum of numbers in the array
+ */
+
+int sum(int nseqs, int *arr);
+
+
 #endif /* CEEQ_ARR_H_ */
 
 

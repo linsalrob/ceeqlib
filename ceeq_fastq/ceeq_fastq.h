@@ -69,6 +69,7 @@ struct fastq {
 /* 
  * read a fastq file from an uncompressed file
  *
+ * Parameters:
  * This method takes a file name and an array of structs that we'll use
  * to create a hash of the sequences based on their IDs. 
  *
@@ -76,6 +77,7 @@ struct fastq {
  * in the information line. We include the @ in the ID (to make things
  * faster).
  *
+ * Returns:
  * Returns the number of sequences read from the file
  */
 int read_fastq(char *filename, struct fastq *seqs[]);
@@ -85,6 +87,7 @@ int read_fastq(char *filename, struct fastq *seqs[]);
  * this is analogous to the above method, and creates the same
  * hashed data structure, but it reads a gzip compressed file.
  *
+ * Returns:
  * Returns the number of sequences read from the file
  */
 int read_fastq_gz(char *filename, struct fastq *seqs[]);
@@ -97,8 +100,13 @@ int read_fastq_gz(char *filename, struct fastq *seqs[]);
 
 #define HASHSIZE 10000
 
-/* The hash function takes a string and converts it to an int.
+/* 
+ * The hash function takes a string and converts it to an int.
  *
+ * Parameters:
+ * a string
+ *
+ * Returns:
  * Returns an integer already modded on the value of HASHSIZE
  */
 unsigned hash (char *);
@@ -111,6 +119,7 @@ unsigned hash (char *);
  * struct that represents that sequence (including the sequence 
  * and the quality scores).
  *
+ * Returns:
  * If it is there we return a pointer otherwise we return NULL
  */
 
@@ -119,6 +128,7 @@ struct fastq *lookup(char *, struct fastq *seqs[]);
 /* 
  * Add a sequence to the hash.
  *
+ * Parameters:
  * The first argument is our fastq structure that we are going to add
  *
  * The second argument is one of "info" (for the whole id line), 
@@ -130,6 +140,7 @@ struct fastq *lookup(char *, struct fastq *seqs[]);
  * The third argument is a pointer to an array of structs that contains
  * our hash and to which the sequences will be added.
  *
+ * Returns:
  * Returns the element that was added to the hash, or NULL if we 
  * are not able to add the element to the hash for some reason (e.g.
  * the sequence is already there).
@@ -147,7 +158,10 @@ struct fastq *add(struct fastq *, char [], struct fastq *seqs[]);
 /* 
  * Return the number of sequences in the hash.
  *
+ * Parameters:
  * seqs[] is the hash containing the sequences
+ *
+ * Returns:
  * returns the number of sequences
  */
 int number_of_sequences(struct fastq *seqs[]);
@@ -155,8 +169,11 @@ int number_of_sequences(struct fastq *seqs[]);
 /* 
  * Return the DNA sequence for a given ID 
  *
+ * Parameters:
  * *id is the ID of the sequence you would like to get
  * seqs[] is the hash containing the sequences
+ *
+ * Returns:
  * returns a pointer to the DNA sequence
  */
 char *get_sequence(char *id, struct fastq *seqs[]);
@@ -164,8 +181,11 @@ char *get_sequence(char *id, struct fastq *seqs[]);
 /* 
  * Return the quality scores for a given ID 
  *
+ * Parameters:
  * *id is the ID of the sequence you would like to get
  * seqs[] is the hash containing the sequences
+ *
+ * Returns:
  * returns the string representation of the quality scores
  */
 char *get_quality(char *id, struct fastq *seqs[]);
@@ -179,6 +199,22 @@ char *get_quality(char *id, struct fastq *seqs[]);
  */
 int get_ids(char *ids[], struct fastq *seqs[]);
 
+
+/*
+ * Create an array of the lengths of the sequences.
+ *
+ * This is a convenience method that then allows you to calculate
+ * eg. N50, mean, median, etc lengths
+ *
+ * Parameters:
+ * num_seqs is the number of sequences in the hash
+ * seqs[] is the hash containing the sequences
+ *
+ * Returns:
+ * int [] of the lengths of all the sequences
+ */
+
+int sequence_lengths(struct fastq *seqs[], int []);
 
 // PROTOTYPES FOR PRINTING THE SEQUENCES
 

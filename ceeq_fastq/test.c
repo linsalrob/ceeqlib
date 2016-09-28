@@ -6,7 +6,8 @@
 #include <string.h>
 
 /*
- * A test suite for reading fastq files. This tests all of the methods that we have written 
+ * A test suite for reading fastq files. 
+ * This tests reading fastq files that are not compressed.
  *
  */
 

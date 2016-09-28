@@ -76,3 +76,31 @@ int get_ids(char *ids[], struct fastq *seqs[]) {
 
 	return j;
 }
+
+
+/*
+ * Get a pointer to a list of the lengths of the sequences. We need to know the
+ * number of sequences, which you may already have (e.g. from when you read the
+ * file) or you can get from the number_of_sequences() function above.
+ *
+ * Parameters:
+ * number of sequences (int)
+ * hash of sequences
+ *
+ * Returns a pointer to an array of the lengths of the sequences
+ */
+
+int sequence_lengths(struct fastq *seqs[], int lens[]) {
+
+	struct fastq *fq;
+	int n = 0;
+	for (int i=0; i<=HASHSIZE; i++) {
+		fq = seqs[i];
+		while (fq != NULL) {
+			lens[n++] = strlen(fq->seq);
+			fq = fq->next;
+		}
+	}
+	return n;
+
+}

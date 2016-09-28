@@ -11,4 +11,10 @@ int main(int argc, char *argv[]) {
 	shuffle(argc, argv);
 	for (int i=0; i<argc; i++)
 		printf("%s\n", argv[i]);
+
+	// create an array of 5 numbers
+	int arr[5] = {2, 4, 6, 8, 10};
+	int s = sum(5, arr);
+	if (s != 30) 
+		printf("The array should sum to 30 but sums to %d\n", s);
 }
