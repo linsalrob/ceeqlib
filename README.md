@@ -14,7 +14,11 @@ Our libraries are split into core functions and sequence related functions. ceeq
 * *ceeq_fastq* has functions for reading fastq files and returning hashes of DNA sequences. You can [read more](ceeq_fastq) about the sequence 
 format or read [ceeq_fastq.h](ceeq_fastq/ceeq_fastq.h)
 
+* *ceeq_fastq_pair* has functions for checking paired files to see which reads are pairs and which are singletons. [ceeq_fastq_pair.h](ceeq_fastq_pair.h)
 
+* *ceeq_lib*  has global parameters for the library (currently only the version number!)
 
-ceeq_count  ceeq_fastq_pair  ceeq_lib  ceeq_str  ceeq_subsample
+* *ceeq_subsample* subsample a fastq file and print a required number of sequences.
+
+* *ceeq_count* count the characters or sequences in a fastq file and summarize them.
 
