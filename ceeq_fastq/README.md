@@ -26,7 +26,7 @@ line starting with the @ symbol), the sequence id (which is the first word up
 until any whitespace), the sequence, and the quality string.
 
 
-The functions in [ceeq_fastq.h](ceeeq_fastq.h) are all associated with reading 
+The functions in [ceeq_fastq.h](ceeq_fastq.h) are all associated with reading 
 fastq files and creating this list of fastq objects.
 
 #Functions associated with reading the fastq files.
