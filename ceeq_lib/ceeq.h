@@ -14,7 +14,7 @@
 /*
  * The current version of the software
  */
-#define VERSION = 0.3;
+#define VERSION = 0.4;
 
 #endif /* CEEQ_LIB_H_ */
 
