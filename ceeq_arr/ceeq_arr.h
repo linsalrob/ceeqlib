@@ -12,7 +12,7 @@
 #define CEEQ_ARR_H_
 
 /*
- * Fisher-Yates shuffle an array of strings.
+ * Shuffle an array of strings. The default implementation uses the Fisher-Yates shuffle.
  *
  * size is the size of the array, and arr is an array of pointers.
  */
@@ -20,7 +20,7 @@ void shuffle(int size, char *arr[]);
 
 /*
  * Swop two elements in an array. Given an array of pointers and 
- * two locations we swap the two elements. This is a conveniene method!
+ * two locations we swap the two elements. This is a convenience method for the shuffle algorithm!
  */
 
 void swop(char *arr[], int, int);
