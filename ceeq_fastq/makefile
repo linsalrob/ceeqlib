@@ -93,7 +93,7 @@ all: clean $(LIBNAME) install test
 
 reinstall: clean $(LIBNAME) install test
 
-test: cleantest
+test: cleantest install
 	$(CC) $(CFLAGS) $(INCLUDES) -o ../tests/test_reading_fastq test.c $(LFLAGS)
 	$(CC) $(CFLAGS) $(INCLUDES) -o ../tests/test_reading_gz_fastq test_gz.c $(LFLAGS)
 
