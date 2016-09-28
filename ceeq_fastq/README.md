@@ -61,15 +61,19 @@ was added to the hash or NULL if the element could not be added to the hash.
 #Simple functions that summarize data
 
 `int number_of_sequences(struct fastq *seqs[]);`
+
 Returns the number of sequences in the hash
 
 `char *get_sequence(char *id, struct fastq *seqs[]);`
+
 Return the DNA sequence for a given ID
 
 `char *get_quality(char *id, struct fastq *seqs[]);`
+
 Return the quality scores for a given ID
 
 `int get_ids(char *ids[], struct fastq *seqs[]);`
+
 Get an array of the ids for all of the sequences.
 
 
