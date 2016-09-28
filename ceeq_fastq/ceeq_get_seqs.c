@@ -104,3 +104,5 @@ int sequence_lengths(struct fastq *seqs[], int lens[]) {
 	return n;
 
 }
+
+
