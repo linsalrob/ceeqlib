@@ -1,6 +1,7 @@
 
 #include "ceeq_fastq.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 /*
@@ -16,12 +17,11 @@
 int number_of_sequences(struct fastq *seqs[]) {
 	int n = 0;
 	struct fastq *fq;
-	for (int i=0; i<=HASHSIZE; i++) {
+	for (int i=0; i<HASHSIZE; i++) {
 		fq = seqs[i];
 		while ((fq != NULL) && n++ && (fq = fq->next))
 			;
 	}
-
 	return n;
 }
 
@@ -94,12 +94,10 @@ int sequence_lengths(struct fastq *seqs[], int lens[]) {
 
 	struct fastq *fq;
 	int n = 0;
-	for (int i=0; i<=HASHSIZE; i++) {
+	for (int i=0; i<HASHSIZE; i++) {
 		fq = seqs[i];
-		while (fq != NULL) {
-			lens[n++] = strlen(fq->seq);
-			fq = fq->next;
-		}
+		while ((fq != NULL) && (lens[n++] = strlen(fq->seq)) && (fq = fq->next))
+			;
 	}
 	return n;
 

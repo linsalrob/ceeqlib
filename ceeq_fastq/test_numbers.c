@@ -31,10 +31,11 @@ int main(int argc, char *argv[]) {
 	int lens[nseqs];
 	int lseqn = sequence_lengths(seqs, lens);
 	if (TESTPRINT) {
-		printf("Test counted the lengths of %d sequences\n", lseqn);
+		printf("Test counted the lengths of %d sequences: ", lseqn);
 		for (int i =0; i<nseqs; i++)
-			printf("%d\n", lens[i]);
+			printf("%d ", lens[i]);
 	}
+	printf("\n");
 
 
 

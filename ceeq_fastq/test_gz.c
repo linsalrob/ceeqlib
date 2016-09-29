@@ -35,9 +35,13 @@ int main(int argc, char *argv[]) {
 
 	/* test getting the ids */
 	char *ids[nnseqs];
-	nnseqs = get_ids(ids, seqs);
-	printf("Got %d ids\n", nnseqs);
-	for (int i=0; i<nnseqs; i++)
+	int nnseqsids = get_ids(ids, seqs);
+	if (nnseqsids != nnseqs) {
+		printf("There was an error when we got the ids. This returned %d ids but it should be %d\n", nnseqsids, nnseqs);
+		error++;
+	}
+	printf("Got %d ids\n", nnseqsids);
+	for (int i=0; i<nnseqsids; i++)
 		printf("ID %d: %s\n", i, ids[i]);
 	
 
