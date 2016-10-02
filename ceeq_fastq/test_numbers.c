@@ -1,5 +1,6 @@
 
 #include <ceeq_fastq.h>
+#include <ceeq_arr.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -37,6 +38,19 @@ int main(int argc, char *argv[]) {
 	}
 	printf("\n");
 
+	
+	// create an array of integers and get the sorted lengths of
+	// sequences
+	int slens[nseqs];
+	int slseqn = sorted_sequence_lengths(seqs, slens);
+	if (TESTPRINT) {
+		printf("Retrieved sorted lengths of %d sequences: ", slseqn);
+		for (int i =0; i<nseqs; i++)
+			printf("%d ", slens[i]);
+	}
+	printf("\n");
+
+	
 
 
 

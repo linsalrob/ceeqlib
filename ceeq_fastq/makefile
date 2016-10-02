@@ -46,7 +46,7 @@ INCLUDES = -I$(HOME)/include  -I../include -Isrc -I$(INCDIR)
 # define library paths in addition to /usr/lib
 #   if I wanted to include libraries not in /usr/lib I'd specify
 #   their path using -Lpath, something like:
-LFLAGS = -L$(HOME)/lib  -L$(LIBDIR) -L$(HOME)/Dropbox/GitHubs/ceeqlib/lib -lceeq_fastq -lceeq_str -lz
+LFLAGS = -L$(HOME)/lib  -L$(LIBDIR) -L$(HOME)/Dropbox/GitHubs/ceeqlib/lib -lceeq_fastq -lceeq_str -lceeq_arr -lz
 
 # define any libraries to link into executable:
 #   if I want to link in libraries (libx.so or libx.a) I use the -llibname 
