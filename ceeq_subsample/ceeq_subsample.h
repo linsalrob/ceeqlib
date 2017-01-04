@@ -51,6 +51,31 @@ char **subsample_n(int nseqs, char *arr[], int n);
  *
  */
 
-int subsample(int, char *, int);
+int subsample_print(int, char *, int);
+
+/* 
+ * subsample a fastq file and store the sequences in a hash
+ *
+ * Retrieve nseqs sequences (or all the sequences in the file if nseqs is too small)
+ * from fastqfile.
+ *
+ * Optionally, compressed can be set to true to use a gzipped file
+ *
+ * Parameters:
+ *    int    : the number of sequences to subsample 
+ *    char * : the name of the fastq file to subsample
+ *    int    : whether the file is compressed. If this value is > 0 then we assume the file
+ *             is compressed.
+ *
+ * Output:
+ *    There is no output from this method
+ *
+ * Returns:
+ *    int : the number of sequences subsampled. 
+ *
+ */
+
+int subsample(int nseqs, char *fastqfile, struct fastq *seqs[], int compressed);
+
 
 #endif /* CEEQ_SUBSAMPLE_H */
