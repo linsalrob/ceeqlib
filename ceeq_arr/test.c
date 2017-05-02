@@ -17,4 +17,9 @@ int main(int argc, char *argv[]) {
 	int s = sum(5, arr);
 	if (s != 30) 
 		printf("The array should sum to 30 but sums to %d\n", s);
+
+	int a = 3;
+	for (int b = 1; b < 6; b++) {
+		printf("Comparing %d to %d resulted in %d\n", a, b, compareints(&a, &b));
+	}
 }

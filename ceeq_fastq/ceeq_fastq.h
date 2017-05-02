@@ -190,6 +190,19 @@ char *get_sequence(char *id, struct fastq *seqs[]);
  */
 char *get_quality(char *id, struct fastq *seqs[]);
 
+/*
+ * Get the full identifier for a sequence from its ID.
+ *
+ * Parameters:
+ * id is the string for an ID
+ * seqs is hte hash
+ *
+ * Returns:
+ * returns the full identifier or NULL if the sequence was not found
+ */
+
+char *get_seq_information(char *id, struct fastq *seqs[]);
+
 /* 
  * Create an array of all the sequence ids
  *
@@ -215,6 +228,22 @@ int get_ids(char *ids[], struct fastq *seqs[]);
  */
 
 int sequence_lengths(struct fastq *seqs[], int []);
+
+/*
+ * Get the sequence lengths sorted from lowest to highest.
+ *
+ * This uses sequence lengths, and then calls quick sort to sort them.
+ *
+ * Parameters:
+ *   hash of sequences
+ *   array to store the lengths of the sequences (should be the appropriate size)
+ *
+ * Returns:
+ *   Returns the number of sequences that were read.
+ */
+
+int sorted_sequence_lengths(struct fastq *seqs[], int lens[]);
+
 
 // PROTOTYPES FOR PRINTING THE SEQUENCES
 
@@ -243,4 +272,7 @@ void print_fastq(struct fastq *seqs[]);
 void print_fasta(struct fastq *seqs[]);
 
 #endif /* CEEQ_FASTQ_H */
+
+
+
 

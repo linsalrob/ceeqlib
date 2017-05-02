@@ -39,6 +39,21 @@ void swop(char *arr[], int, int);
 int sum(int nseqs, int *arr);
 
 
+/*
+ * Compare two ints and return <0, 0, or >0 depending on the relative comparisons.
+ *
+ * Parameters:
+ * 	The two ints to compare
+ *
+ * Returns:
+ * 	An int that is <0 is a is less than b, 0 if they are the same, or >0 if a is bigger than b
+ *
+ */
+
+int compareints(const void * a, const void * b);
+
+
+
 #endif /* CEEQ_ARR_H_ */
 
 

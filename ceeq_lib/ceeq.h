@@ -1,21 +1,29 @@
 
 /*
- * ceeq_lib.h
+ * ceeq.h
  *
- * These are general elements for the ceeq library that are used by multiple components.
+ * Prototypes for the ceeq executable
  *
- * Part of the ceeq_ library. These software are released as is.
+ * Part of the ceeq_lib library. These software are released as is.
  *
  */
 
-#ifndef CEEQ_LIB_H_
-#define CEEQ_LIB_H_
+#ifndef CEEQ_H_
+#define CEEQ_H_
 
 /*
- * The current version of the software
+ * Print the help message listing user options for ceeq
  */
-#define VERSION = 0.4;
 
-#endif /* CEEQ_LIB_H_ */
+void print_help(char *name);
+
+/*
+ * Print a brief usage message to remind the user of the options
+ */
+
+void print_usage(char *name);
+
+
+#endif /* CEEQ_H_ */
 
 

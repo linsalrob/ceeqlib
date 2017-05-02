@@ -1,5 +1,6 @@
 
 #include "ceeq_fastq.h"
+#include <ceeq_arr.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -58,6 +59,26 @@ char *get_quality(char *id, struct fastq *seqs[]) {
 
 
 /*
+ * Get the full sequence information for a sequence from its ID. This is
+ * all the info on the ID line (including the ID).
+ *
+ * id is the string for an ID
+ * seqs is hte hash
+ * returns the full identifier or NULL if the sequence was not found
+ */
+
+char *get_seq_information(char *id, struct fastq *seqs[]) {
+	struct fastq *fq = seqs[hash(id)];
+	if (fq == NULL)
+		return NULL;
+	while ((fq != NULL) && strcmp(fq->id, id) && (fq = fq->next))
+		;
+	return fq->info;
+}
+
+
+
+/*
  * Get a list of all the ids. We need a pointer to an array to put the ids
  * and the pointer to the hash of data.
  *
@@ -84,10 +105,11 @@ int get_ids(char *ids[], struct fastq *seqs[]) {
  * file) or you can get from the number_of_sequences() function above.
  *
  * Parameters:
- * number of sequences (int)
- * hash of sequences
+ *   hash of sequences
+ *   array to store the lengths of the sequences (should be the appropriate size)
  *
- * Returns a pointer to an array of the lengths of the sequences
+ * Returns:
+ *   Returns the number of sequences that were read.
  */
 
 int sequence_lengths(struct fastq *seqs[], int lens[]) {
@@ -104,3 +126,23 @@ int sequence_lengths(struct fastq *seqs[], int lens[]) {
 }
 
 
+/*
+ * Get the sequence lengths sorted from lowest to highest.
+ *
+ * This uses sequence lengths, and then calls quick sort to sort them.
+ *
+ * Parameters:
+ *   hash of sequences
+ *   array to store the lengths of the sequences (should be the appropriate size)
+ *
+ * Returns:
+ *   Returns the number of sequences that were read.
+ */
+
+int sorted_sequence_lengths(struct fastq *seqs[], int lens[]) {
+	int n = sequence_lengths(seqs, lens);
+
+	// qsort(lens, n, sizeof(&lens)/sizeof(lens[0]), compareints);
+	qsort(lens, n, sizeof(int), compareints);
+	return n;
+}

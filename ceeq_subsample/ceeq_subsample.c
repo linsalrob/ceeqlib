@@ -35,16 +35,16 @@ char **subsample_n(int nseqs, char *arr[], int n) {
 }
 
 /* 
- * subsample a fastq file. 
+ * subsample a fastq file and print sequences in fastq format
  *
- * Retriece nseqs sequences (or all the sequences in the file if nseqs is too small)
+ * Retrieve nseqs sequences (or all the sequences in the file if nseqs is too small)
  * from fastqfile.
  *
  * Optionally, compressed can be set to true to use a gzipped file
  *
  */
 
-int subsample(int nseqs, char *fastqfile, int compressed) {
+int subsample_print(int nseqs, char *fastqfile, int compressed) {
 
 	// read the fastq file into our hash called seqs
 	
@@ -75,5 +75,53 @@ int subsample(int nseqs, char *fastqfile, int compressed) {
 	}
 	return nseqs;
 }
+
+
+/* 
+ * subsample a fastq file. 
+ *
+ * Retrieve nseqs sequences (or all the sequences in the file if nseqs is too small)
+ * from fastqfile and store them in the hash provided as seqs (this should be a 
+ * struct fastq *seqs[HASHSIZE] array).
+ *
+ * Optionally, compressed can be set to true to use a gzipped file
+ *
+ * Returns the number of sequences that were added to the hash.
+ *
+ */
+
+int subsample(int nseqs, char *fastqfile, struct fastq *seqs[], int compressed) {
+
+
+	// read the fastq file into a temporary hash
+	struct fastq *allseqs[HASHSIZE] = {NULL};
+
+	int read_seqs = 0;
+	if (compressed)
+		read_seqs = read_fastq_gz(fastqfile, allseqs);
+	else
+		read_seqs = read_fastq(fastqfile, allseqs);
+
+	if (read_seqs < nseqs) {
+		fprintf(stderr, "You requested %d sequences but there are only %d in the file!\n", nseqs, read_seqs);
+		nseqs = read_seqs;
+	}
+
+	// get all the ids from the sequences
+	char *ids[read_seqs];
+	get_ids(ids, allseqs);
+
+	// subsample those IDs 
+	char **subsample = subsample_n(read_seqs, ids, nseqs);
+
+	for (int i=0; i<nseqs; i++) {
+		char *info = get_seq_information(subsample[i], seqs);
+		char *seq = get_sequence(subsample[i], seqs);
+		char *qua = get_quality(subsample[i], seqs);
+	
+	}
+	return nseqs;
+}
+
 
 

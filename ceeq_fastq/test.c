@@ -81,6 +81,14 @@ int main(int argc, char *argv[]) {
 		error++;
 	}
 
+	char *info = get_seq_information("@GFH7CG303FQFE8/1", seqs);
+	if (strcmp("@GFH7CG303FQFE8/1 length=419 xy=2234_0770 region=3 run=R_2010_04_12_12_22_54_", info)) {
+		printf("TEST: The information for @GFH7CG303FQFE8/1 was unexpected: '%s'\n", info);
+		error++;
+	}
+
+
+
 	if (TESTPRINT) {
 		printf("Printing the sequences\n");
 		print_fastq(seqs);
