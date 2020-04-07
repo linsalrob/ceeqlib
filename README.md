@@ -1,7 +1,11 @@
+[![Edwards Lab](https://img.shields.io/badge/Bioinformatics-EdwardsLab-03A9F4)](https://edwards.sdsu.edu/research)
+
 # ceeqlib
 ceeqlib (pronounced seq-lib) is a library written in C for manipulating fastq and fasta files.
 
 ceeqlib is written in pure C using only the standard library to ensure portability among machines. See the Installation section.
+
+
 
 # ceeqlib libraries
 
